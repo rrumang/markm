@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+  <title>Hello</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+  <div th:replace="~{fragments/bodyHeader :: bodyHeader}" />
+  <div class="subCntBody clearfix">
+    <!-- 서브콘텐츠 -->
+    <section>
+      <div id="cntntsView">
+
+        <div class="greeting">
+          <div class="gt_t">
+            <strong>대전창조경제혁신센터에 오신 <br> 여러분을 환영합니다.</strong>
+            <span>Welcome To Daejeon Center for Creative Economy & Innovation !</span>
+          </div>
+          <div class="gt_m">
+            <strong>“대전스타트업파크, 스타트업 랜드마크 될 것”</strong>
+
+            <div class="gt_img">
+              <span class="img"><img src="/images/sub/greeting_img.png" alt=""></span>
+              <strong>대표<em>송영민</em></strong>
+            </div>
+          </div>
+          <div class="gt_b">
+            <b>대전스타트업파크</b>는 대전의 기술창업 스타트업 성장을 위한 <b>인프라 구축 및 다양한 프로그램을 지원, 운영하는 곳</b>입니다.
+            <br><br>
+            점-선-면이라는 컨셉으로 개방형·분산형으로 조성된 대전스타트업파크는 대전시에서 구축한 D-브릿지 3개동과 신한금융그룹에서 만든 신한스퀘어브릿지 3개동, KT에서 운영 중인 KT브릿지랩까지 총 7개 동에 40여 개의 기업이 입주해 성장하고 있습니다. <b>2024년에는 대전스타트업파크의 중심이 되는 ‘앵커건물’이 완공</b>을 앞두고 있습니다.
+            <br><br>
+            대전스타트업파크에서는 기업과 투자자, 지원기관들이 자유롭게 교류하고 네트워킹을 할 수 있도록 만남의 장을 활발히 지원하고 있으며, 향후 앵커건물이 완공될 시 이곳, 대전스타트업파크는 100여개의 스타트업과 1000여명의 유동인구가 모이는, <b>대한민국 창업의 중심지로 발돋움 할 수 있다고 확신</b>합니다.
+            <br><br>
+            대전광역시와 대전창조경제혁신센터는 앞으로 대·중견 기업, 혁신기관, 스타트업, 정부·지자체, 투자사, 해외 인프라 등을 적극 활용하여 <b>상생 협력을 통한 ‘First-Class 과학창업 중심도시 대전’을 견인</b>하고자 합니다.
+            <br><br>
+            또한 대전스타트업파크를 중심으로 지역거점형 창업 인프라 환경을 구축하고, 대전 주도형 투자 생태계 조성을 통한 스타트업 성장을 가속화 하고자 합니다.
+            <br><br>
+            대전스타트업파크를 통해 성장할 스타트업을 응원하며, 성공창업을 위해 적극 지원하겠습니다.
+            <br><br>
+            창업기업의 성공을 응원합니다!!
+          </div>
+
+          <div class="sign"><strong>센터장<em>박대희</em></strong></div>
+        </div>
+
+        <!-- 자료(페이지)관리자 -->
+        <div class="chage_info_box">
+          <ul class="chage_info">
+            <li><i class="xi-home" aria-hidden="true"></i><strong>메뉴담당자 :</strong> 대전창조경제혁신센터</li>
+            <li><i class="xi-call" aria-hidden="true"></i><strong>전화번호 :</strong> 042-385-0762</li>
+          </ul>
+        </div>
+        <!-- //자료(페이지)관리자 -->
+
+      </div>
+    </section>
+    <!-- 서브콘텐츠 -->
+  </div>
+
+  <div th:replace="~{fragments/footer :: footer}" />
+
+</div> <!-- /container -->
+
+</body>
+</html>
