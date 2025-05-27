@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
-    <form th:object="${form}" method="post">
+    <form th:object="${form}" method="post" enctype="multipart/form-data">
         <!-- id -->
         <input type="hidden" th:field="*{id}" />
         <div class="form-group">
@@ -18,6 +18,10 @@
         <div class="form-group">
             <label th:for="stockQuantity">수량</label>
             <input type="number" th:field="*{stockQuantity}" class="form-control" placeholder="수량을 입력하세요" />
+        </div>
+        <div>
+            <label th:for="attachFile">업로드 사진 선택</label>
+            <input type="file" th:name="attachFile" class="file-selector-button">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

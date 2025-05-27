@@ -13,7 +13,9 @@
             <tbody>
             <tr th:each="item : ${items}">
                 <td th:text="${item.id}"></td>
-                <td th:text="${item.name}"></td>
+                <td>
+                    <a th:href="@{/items/{id}/view (id=${item.id})}"><span th:text="${item.name}"></span></a>
+                </td>
                 <td th:text="${item.price}"></td>
                 <td th:text="${item.stockQuantity}"></td>
                 <td>

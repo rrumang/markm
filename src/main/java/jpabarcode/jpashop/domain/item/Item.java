@@ -1,6 +1,7 @@
 package jpabarcode.jpashop.domain.item;
 
 import jpabarcode.jpashop.domain.Category;
+import jpabarcode.jpashop.domain.UploadFile;
 import jpabarcode.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +21,10 @@ public class Item {
     private Long id;
 
     private String name;
+
     private int price;
     private int stockQuantity;
+    private String fileName;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();

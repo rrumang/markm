@@ -1,15 +1,17 @@
 package jpabarcode.jpashop.controller;
 
 import jpabarcode.jpashop.domain.item.Item;
+import jpabarcode.jpashop.file.FileStore;
 import jpabarcode.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @Controller
@@ -17,24 +19,23 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final FileStore fileStore;
 
+    //상품등록 화면 조회
     @GetMapping("/items/new")
     public String createForm(Model model) {
         model.addAttribute("form", new Item());
         return "items/createForm";
     }
 
+    //상품등록
     @PostMapping("/items/new")
-    public String create(PrinterForm form) {
-        Item item = new Item();
-        item.setName(form.getName());
-        item.setPrice(form.getPrice());
-        item.setStockQuantity(form.getStockQuantity());
-
-        itemService.save(item);
+    public String create(ItemForm form) throws IOException {
+        itemService.save(form);
         return "redirect:/items";
     }
 
+    //상품목록 조회
     @GetMapping("/items")
     public String list(Model model) {
         List<Item> items = itemService.findItems();
@@ -42,6 +43,15 @@ public class ItemController {
         return "items/itemlist";
     }
 
+    //상품상세 조회
+    @GetMapping("/items/{itemId}/view")
+    public String itemView(@PathVariable("itemId") Long itemId, Model model) {
+        Item item = itemService.findOne(itemId);
+        model.addAttribute("item", item);
+        return "items/itemView";
+    }
+
+    //상품수정 화면 조회
     @GetMapping("/items/{itemId}/edit")
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
         Item item = itemService.findOne(itemId);
@@ -56,12 +66,35 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
+    //상품수정
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") PrinterForm form) {
-
-        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
-
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") ItemForm form) throws IOException {
+        itemService.updateItem(form);
         return "redirect:/items";
     }
+
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
+    }
+
+//    @GetMapping("/attach/{itemId}")
+//    public ResponseEntity<Resource> downloadAttach(@PathVariable Long itemId) throws MalformedURLException {
+//        Item item = itemService.findOne(itemId);
+//        String storeFileName = item.getAttachFile().getStoreFileName();
+//        String uploadFileName = item.getAttachFile().getUploadFileName();
+//
+//        UrlResource resource = new UrlResource("file:" + fileStore.getFullPath(storeFileName));
+//
+//        log.info("uploadFileName={}", uploadFileName);
+//
+//        String encodedUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
+//        String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+//                .body(resource);
+//    }
 
 }
