@@ -13,6 +13,7 @@ public class ItemForm {
 
     private Long id;
     private String name;
+    private String content;
     private int price;
     private int stockQuantity;
     private MultipartFile attachFile;

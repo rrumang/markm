@@ -22,6 +22,8 @@ public class Item {
 
     private String name;
 
+    private String content;
+
     private int price;
     private int stockQuantity;
     private String fileName;

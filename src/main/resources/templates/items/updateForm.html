@@ -3,33 +3,35 @@
 <!-- TUI 에디터 CSS CDN -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <!-- TUI 에디터 JS CDN -->
+
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <head th:replace="~{fragments/header :: header}" />
 <body>
 <div class="container">
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
-    <form th:action="@{/items/new}" th:object="${form}" id="frm" method="post" enctype="multipart/form-data">
-        <input type="hidden" id="content" name="content">
+    <form th:object="${form}" method="post" id="frm" enctype="multipart/form-data">
+        <!-- id -->
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" id="content" th:field="*{content}">
         <div class="form-group">
             <label th:for="name">상품명</label>
-            <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력하세요">
+            <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력하세요" />
         </div>
-        <div class="form-group">
+        <div>
             <label th:for="attachFile">썸네일</label>
             <input type="file" th:name="attachFile" class="file-selector-button">
         </div>
         <!--<div class="form-group">
             <label th:for="price">가격</label>
-            <input type="number" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요">
+            <input type="number" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요" />
         </div>
         <div class="form-group">
             <label th:for="stockQuantity">수량</label>
-            <input type="number" th:field="*{stockQuantity}" class="form- control" placeholder="수량을 입력하세요">
+            <input type="number" th:field="*{stockQuantity}" class="form-control" placeholder="수량을 입력하세요" />
         </div>-->
         <div id="contents"></div>
-        <button type="button" id="btn_insert" onclick="insert();" class="btn btn-primary">등록</button>
+        <button type="button" id="btn_update" onclick="update();" class="btn btn-primary">수정</button>
     </form>
-    <br/>
     <div th:replace="~{fragments/footer :: footer}" />
 </div> <!-- /container -->
 </body>
@@ -40,7 +42,7 @@
         el: document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
         height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
         initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-        initialValue: '내용을 입력해 주세요.',       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+        initialValue: document.getElementById("content").value,       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
         previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
         /* start of hooks */
         hooks: {
@@ -66,6 +68,7 @@
                     // 4. addImageBlobHook의 callback 함수를 통해, 디스크에 저장된 이미지를 에디터에 렌더링
                     const imageUrl = `/tui-editor/image-print?filename=${filename}`;
                     callback(imageUrl, 'image alt attribute');
+                    debugger;
 
                 } catch (error) {
                     console.error('업로드 실패 : ', error);
@@ -76,7 +79,7 @@
     });
 
     //제품 저장
-    async function insert() {
+    async function update() {
         //alert("전송 : " + editor.getHTML());
         // 1. 콘텐츠 입력 유효성 검사
         if (editor.getMarkdown().length < 1) {

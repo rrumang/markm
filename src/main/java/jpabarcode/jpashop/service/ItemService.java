@@ -25,6 +25,8 @@ public class ItemService {
     public void save(ItemForm form) throws IOException {
         Item item = new Item();
         item.setName(form.getName());
+        item.setContent(form.getContent());
+        System.out.println("item.getContent : " + item.getContent());
         item.setPrice(form.getPrice());
         item.setStockQuantity(form.getStockQuantity());
 
@@ -42,6 +44,7 @@ public class ItemService {
     public void updateItem(ItemForm form) throws IOException {
         Item findItem = itemRepository.findOne(form.getId());
         findItem.setName(form.getName());
+        findItem.setContent(form.getContent());
         findItem.setPrice(form.getPrice());
         findItem.setStockQuantity(form.getStockQuantity());
 

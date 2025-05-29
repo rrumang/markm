@@ -18,5 +18,9 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 
+#제품 이미지 저장 경로
 file:
   dir: /Users/rrumang/test/file/
+#에디터에 첨부된 이미지 저장 경로
+upload:
+  dir: /Users/rrumang/test/upload/

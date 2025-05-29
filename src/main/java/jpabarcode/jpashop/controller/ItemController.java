@@ -56,14 +56,15 @@ public class ItemController {
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
         Item item = itemService.findOne(itemId);
 
-        PrinterForm form = new PrinterForm();
+        ItemForm form = new ItemForm();
         form.setId(item.getId());
         form.setName(item.getName());
+        form.setContent(item.getContent());
         form.setPrice(item.getPrice());
         form.setStockQuantity(item.getStockQuantity());
 
         model.addAttribute("form", form);
-        return "items/updateItemForm";
+        return "items/updateForm";
     }
 
     //상품수정
