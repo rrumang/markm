@@ -7,7 +7,14 @@
 <body>
 <div class="container">
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}" />
-    <div class="jumbotron"> <h1>HELLO SHOP</h1>
+    <div class="jumbotron"><h1 th:text="*{member.name}?:'비로그인 사용자'">로그인 사용자 이름</h1>
+        <div th:if="${not #strings.isEmpty(member.name)}">
+            <form th:action="@{/logout}" method="post">
+                <button class="w-100 btn btn-dark btn-lg" onclick="location.href='home.html'" type="submit">
+                    로그아웃
+                </button>
+            </form>
+        </div>
         <p class="lead">회원 기능</p> <p>
             <a class="btn btn-lg btn-secondary" href="/company">회사소개</a>
             <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>

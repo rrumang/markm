@@ -26,7 +26,6 @@ public class ItemService {
         Item item = new Item();
         item.setName(form.getName());
         item.setContent(form.getContent());
-        System.out.println("item.getContent : " + item.getContent());
         item.setPrice(form.getPrice());
         item.setStockQuantity(form.getStockQuantity());
 

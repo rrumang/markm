@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,6 +21,13 @@ public class MemberRepository {
     //단건조회
     public Member findOne(Long id) {
         return em.find(Member.class, id);
+    }
+
+    //단건조회(이메일)
+    public Optional<Member> findByEmail(String email) {
+        return findAll().stream()
+                .filter(m -> m.getEmail().equals(email))
+                .findFirst();
     }
 
     //목록조회

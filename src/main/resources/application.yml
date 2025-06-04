@@ -18,6 +18,13 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 
+#servlet trackingModes 쿠기로만 설정
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
+      timeout: 1800
+
 #제품 이미지 저장 경로
 file:
   dir: /Users/rrumang/test/file/

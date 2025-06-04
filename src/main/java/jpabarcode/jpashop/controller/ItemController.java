@@ -40,7 +40,7 @@ public class ItemController {
     public String list(Model model) {
         List<Item> items = itemService.findItems();
         model.addAttribute("items", items);
-        return "items/itemlist";
+        return "items/itemList";
     }
 
     //상품상세 조회
@@ -69,7 +69,7 @@ public class ItemController {
 
     //상품수정
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") ItemForm form) throws IOException {
+    public String updateItem(@ModelAttribute("form") ItemForm form) throws IOException {
         itemService.updateItem(form);
         return "redirect:/items";
     }
