@@ -1,36 +1,539 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header}">
-    <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
+<!-- Header -->
+<head>
+    <title>MARKM</title>
+    <div th:replace="~{fragments/header :: header}"></div>
 </head>
+
+<!-- Body -->
 <body>
-<div class="container">
-    <div th:replace="~{fragments/bodyHeader :: bodyHeader}" />
-    <div class="jumbotron"><h1 th:text="*{member.name}?:'비로그인 사용자'">로그인 사용자 이름</h1>
-        <div th:if="${not #strings.isEmpty(member.name)}">
-            <form th:action="@{/logout}" method="post">
-                <button class="w-100 btn btn-dark btn-lg" onclick="location.href='home.html'" type="submit">
-                    로그아웃
-                </button>
-            </form>
-        </div>
-        <p class="lead">회원 기능</p> <p>
-            <a class="btn btn-lg btn-secondary" href="/company">회사소개</a>
-            <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
-            <a class="btn btn-lg btn-secondary" href="/members">회원 목록</a> </p>
-        <p class="lead">상품 기능</p>
-        <p>
-            <a class="btn btn-lg btn-dark" href="/items/new">상품 등록</a>
-            <a class="btn btn-lg btn-dark" href="/items">상품 목록</a>
-        </p>
-        <p class="lead">주문 기능</p>
-        <p>
-            <a class="btn btn-lg btn-info" href="/order">상품 주문</a>
-            <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>
-        </p>
+<!-- ===== 페이지 로딩 스피너 시작 ===== -->
+<div class="page-loading active">
+    <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>로딩중...</span>
     </div>
-    <div th:replace="~{fragments/footer :: footer}" />
-</div> <!-- /container -->
+</div>
+<!-- ===== 페이지 로딩 스피너 끝 ===== -->
+
+<!-- Page wrapper for sticky footer -->
+<main class="page-wrapper">
+
+    <!-- ===== 네비게이션바 시작 ===== -->
+    <header th:replace="~{fragments/nav :: nav}"></header>
+    <!-- ===== 네비게이션바 끝 ===== -->
+
+    <!-- ===== 메인배너(Hero Slider) 시작 ===== -->
+    <section >
+        <!-- Slider -->
+        <!-- Fade transition -->
+        <div class="swiper swiper-nav-onhover"
+             data-swiper-options='{
+            "effect": "fade",
+            "speed": 800,
+            "autoplay": {
+              "delay": 4500,
+              "disableOnInteraction": false
+            },
+            "loop": true,
+            "pagination": {
+              "el": ".swiper-pagination",
+              "clickable": true
+            },
+            "navigation": {
+              "prevEl": ".btn-prev",
+              "nextEl": ".btn-next"
+            }
+          }'
+        >
+            <div class="swiper-wrapper h-100 mt-5">
+
+                <!-- Item -->
+                <div class="swiper-slide hero h-100 py-xl-5 overflow-hidden"  style="background-image: url(/assets/img/landing/hero_01.jpeg); background-size: cover;">
+                    <a href="/items/ucs" target="_blank" rel="noopener" class="bg-transparent border-0 text-decoration-none">
+                        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none opacity-20" style="background: linear-gradient(122deg, #ccd1d727 0%, #ffffff00 100%);"></span>
+                        <div class="container d-flex align-items-center h-100">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="display-6 mb-lg-4 from-bottom text-shadow-withe">완벽한 마킹 솔루션<br>혁신을 더하다</h4>
+                                    <p class="fs-md text-dark pb-2 mb-lg-5 from-bottom delay-1 text-shadow-withe">열 전사 프린트</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide hero h-100 py-xl-5" style="background-image: url(/assets/img/landing/hero_02.jpeg); background-size: cover;">
+                    <a href="/items/edding" target="_blank" rel="noopener" class="bg-transparent border-0 text-decoration-none">
+                        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none opacity-20" style="background: linear-gradient(122deg, #ccd1d727 0%, #ffffff00 100%);"></span>
+                        <div class="container d-flex align-items-center h-100">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="display-6 mb-lg-4 from-bottom text-shadow-withe">브랜드 가치를 혁신하는<br>마킹 기술</h4>
+                                    <p class="fs-md text-dark pb-2 mb-lg-5 from-bottom delay-1 text-shadow-withe">카트리지 잉크젯</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide hero h-100 py-xl-5" style="background-image: url(/assets/img/landing/hero_03.jpeg); background-size: cover;">
+                    <a href="/items/macsa" target="_blank" rel="noopener" class="bg-transparent border-0 text-decoration-none">
+                        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none opacity-20" style="background: linear-gradient(122deg, #ccd1d727 0%, #ffffff00 100%);"></span>
+                        <div class="container d-flex align-items-center h-100">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="display-6 mb-lg-4 from-bottom text-shadow-withe">마크엠의 포장 자동화 <br> 기술</h4>
+                                    <p class="fs-md text-dark pb-2 mb-lg-5 from-bottom delay-1 text-shadow-withe">자동공급피더</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Prev / next buttons -->
+            <button id="hero-prev" type="button" class="btn btn-prev btn-icon btn-sm me-2 d-none d-lg-flex" aria-label="Previous">
+                <i class="bx bx-chevron-left"></i>
+            </button>
+            <button id="hero-next" type="button" class="btn btn-next btn-icon btn-sm ms-2 d-none d-lg-flex" aria-label="Next">
+                <i class="bx bx-chevron-right"></i>
+            </button>
+            <!-- Pagination (bullets) -->
+            <div class="swiper-pagination "></div>
+        </div>
+    </section>
+    <!-- ===== 메인배너(Hero Slider) 끝 ===== -->
+
+
+    <!-- ===== 회사소개(About) 시작 ===== -->
+    <section class="container pt-5 pb-2 mt-1">
+        <div class="card bg-white border-primary shadow-sm px-4 px-lg-0" data-bs-theme="light">
+            <div class="row align-items-center py-3">
+                <div class="col-xl-5 col-md-6 offset-lg-1 text-center text-md-start py-4 py-lg-5 ps-sm-4 ps-lg-0">
+                    <h3 class="mb-1"> 완벽한 마킹 솔루션, 노하우에 기술을 더하다</h3>
+                    <h3 class="h4 text-danger"> 주식회사 마크엠</h3>
+                    <p class="mb-4 mb-lg-5"> 마크엠의 제공하는 완벽한 마킹 솔루션은 오랜 노하우와 최첨단 기술을 결합하여, 제품에 혁신적인 가치를 더합니다</p>
+                    <a href="/company/about" class="btn btn-primary">회사소개 더보기 <i class="bx bx-plus fs-lg ms-2"></i></a>
+                </div>
+                <div class="col-xl-6 col-lg-5 col-md-6">
+                    <lottie-player class="mx-auto" src="assets/json/animation-financial-landing.json" background="transparent" speed="1" loop autoplay style="max-width: 340px;"></lottie-player>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== 회사소개(About) 끝 ===== -->
+
+
+    <!-- ===== 제품(Product) 시작 ===== -->
+    <section class="container pt-4 mt-md-3 my-lg-3">
+        <!-- <h3 class="pt-xl-2 pb-3 mb-2">제품</h3> -->
+        <div class="swiper" data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 24,
+          "autoHeight": true,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "991": {
+              "slidesPerView": 3
+            }
+          }
+        }'>
+            <div class="swiper-wrapper pb-1">
+
+                <!-- Item -->
+                <div class="swiper-slide">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-3 p-lg-4">
+                            <div class="ratio ratio-16x9 rounded-3">
+                                <img src="/assets/img/landing/hero_01.jpeg" class="d-block rounded-3 product-item-image" alt="Image">
+                            </div>
+                            <div class="pt-3 pt-lg-4 text-center">
+                                <h3 class="h4">열 전사 프린터(TTO)</h3>
+                                <ul class="list-unstyled">
+                                    <li class="fs-sm mb-1">
+                                        S시리즈  ( S32 )
+                                    </li>
+                                    <li class="fs-sm mb-1">
+                                        U시리즈 ( U32. U53,  U107 )
+                                    </li>
+                                </ul>
+                                <div class="d-flex justify-content-center">
+                                    <a href="/items/ucs" class="btn btn-link p-0">
+                                        자세히 보기
+                                        <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-3 p-lg-4">
+                            <div class="ratio ratio-16x9 rounded-3">
+                                <img src="/assets/img/landing/hero_02.jpeg" class="d-block rounded-3 product-item-image" alt="Image">
+                            </div>
+                            <div class="pt-3 pt-lg-4 text-center">
+                                <h3 class="h4">카트리지 잉크젯(TIJ)</h3>
+                                <ul class="list-unstyled">
+                                    <li class="fs-sm mb-1">
+                                        Inline-12
+                                    </li>
+                                    <li class="fs-sm mb-1">
+                                        Inline-25
+                                    </li>
+                                </ul>
+                                <div class="d-flex justify-content-center">
+                                    <a href="/items/edding" class="btn btn-link p-0">
+                                        자세히 보기
+                                        <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-3 p-lg-4">
+                            <div class="ratio ratio-16x9 rounded-3">
+                                <img src="/assets/img/landing/hero_03.jpeg" class="d-block rounded-3 product-item-image" alt="Image">
+                            </div>
+                            <div class="pt-3 pt-lg-4 text-center">
+                                <h3 class="h4">자동공급피더(Feeder)</h3>
+                                <ul class="list-unstyled">
+                                    <li class="fs-sm mb-1">
+                                        RF-Lite
+                                    </li>
+                                    <li class="fs-sm mb-1">
+                                        RF-Auto
+                                    </li>
+                                </ul>
+                                <div class="d-flex justify-content-center">
+                                    <a href="/items/macsa" class="btn btn-link  p-0">
+                                        자세히 보기
+                                        <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination position-relative d-lg-none mt-5"></div>
+        </div>
+    </section>
+    <!-- ===== 제품(Product) 끝 ===== -->
+
+    <!-- ===== 적용사례(Case Study) 시작 ===== -->
+    <div class="bg-secondary pb-5">
+        <section class="container pt-5 pb-2 mt-3 mt-sm-4 mt-xl-5">
+            <h3 class="text-center pb-2 pb-lg-2">적용 사례</h3>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs flex-nowrap justify-content-lg-center overflow-auto pb-2 mb-2 mb-lg-2" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-nowrap active" id="project-management-tab" data-bs-toggle="tab" data-bs-target="#project-management" type="button" role="tab" aria-controls="project-management" aria-selected="true">
+                        <!-- <i class="bx bx-star fs-lg opacity-60 me-2"></i> -->
+                        열 전사 프린터(TTO)
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-nowrap" id="remote-work-tab" data-bs-toggle="tab" data-bs-target="#remote-work" type="button" role="tab" aria-controls="remote-work" aria-selected="false">
+                        <!-- <i class="bx bx-star fs-lg opacity-60 me-2"></i> -->
+                        카트리지 잉크젯(TIJ)
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content bg-light rounded-3 py-4">
+
+                <!-- Project Management -->
+                <div class="tab-pane fade show active" id="project-management" role="tabpanel" aria-labelledby="project-management-tab">
+                    <div class="px-3 px-sm-4 px-lg-4">
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5 px-lg-4">
+                                <div class="ratio ratio-16x9 rounded-3">
+                                    <img src="/assets/img/landing/use01.jpeg" class="d-block rounded-3 product-item-image" alt="Image">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7">
+                                <div class="ps-2 px-lg-4 mt-3 mt-md-0">
+                                    <h5 class="mb-3 text-center text-md-start">열 전사 프린터 - U53 간헐형</h5>
+                                    <ul class="list-unstyled fs-base">
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            제품 : 쿠키 자동 라벨부착기
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            인쇄속도 : 분당 25팩 (간헐식)
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            인쇄내용 : 표시사항 인쇄
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            인쇄영역: 52(가로) x 75(세로)
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            사용 리본: Resin Black, 5mm(폭) x 600m (길이)
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <a href="/items/ucs" class="btn btn-link p-0">
+                                            자세히 보기
+                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5 px-lg-4">
+                                <div class="ratio ratio-16x9 rounded-3 my-auto">
+                                    <img src="/assets/img/landing/use02.jpeg" class="d-block rounded-3 product-item-image" alt="Image">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7">
+                                <div class="ps-2 px-lg-4 mt-3 mt-md-0">
+                                    <h5 class="mb-3 text-center text-md-start">열 전사 프린터 - U32 간헐형</h5>
+                                    <ul class="list-unstyled fs-base">
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            제품 : 로터리 자동필름 포장
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            인쇄속도 : 분당 80팩 (간헐식)
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            인쇄내용 : 2줄 인쇄
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            사용리본 : Resin Black, 4mm(폭) x 600m (길이)
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <a href="/items/ucs" class="btn btn-link p-0">
+                                            자세히 보기
+                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Remote Work -->
+                <div class="tab-pane fade" id="remote-work" role="tabpanel" aria-labelledby="remote-work-tab">
+                    <div class="px-3 px-sm-4 px-lg-4">
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5 px-lg-4">
+                                <div class="ratio ratio-16x9 rounded-3">
+                                    <img src="/assets/img/landing/use03.jpeg" class="d-block rounded-3 product-item-image" alt="Image">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7">
+                                <div class="ps-2 px-lg-4 mt-3 mt-md-0">
+                                    <h5 class="mb-3 text-center text-md-start">Inline-12 카트리지 잉크젯</h5>
+                                    <ul class="list-unstyled fs-base">
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            제품 : Wet tissue 필름 포장
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            속도 : 분당 200팩, 고속 최대 350팩
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            인쇄 : 2줄 인쇄
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            잉크 : NP Black 42ml, 50만팩 인쇄/카트리지
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <a href="/items/ucs" class="btn btn-link p-0">
+                                            자세히 보기
+                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5 px-lg-4">
+                                <div class="ratio ratio-16x9 rounded-3 my-auto">
+                                    <img src="/assets/img/landing/use04.jpeg" class="d-block rounded-3 product-item-image" alt="Image">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7">
+                                <div class="ps-2 px-lg-4 mt-3 mt-md-0">
+                                    <h5 class="mb-3 text-center text-md-start">Inline-12 카트리지 잉크젯</h5>
+                                    <ul class="list-unstyled fs-base">
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            제품 : 조미김 필름 포장
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            속도 : 분당 180팩  (1호라인: 도시락), 분당 50팩 (2호라인 : 전장), 1대의 프린터를 1호/2호라인 이동하며 생산함
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            인쇄 : 2줄 인쇄
+                                        </li>
+                                        <li class="d-flex align-items-center pb-1 mb-1">
+                                            <i class="bx bx-check fs-lg me-2"></i>
+                                            잉크 : NP Black 42ml
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <a href="/items/edding" class="btn btn-link p-0">
+                                            자세히 보기
+                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+    <!-- ===== 적용사례(Case Study) 끝 ===== -->
+
+    <!-- ===== 커뮤니티(Community) 시작 ===== -->
+    <section class="mb-0 pt-3 pt-lg-5 pb-3">
+        <div class="container pb-2 pb-sm-3">
+            <div class="row my-2">
+
+                <div class="col-xl-4 col-lg-5 mb-3">
+                    <div class="card border-0 ">
+
+                        <div class=" card-header d-flex justify-content-between align-items-center mb-0 py-3">
+                            <h3 class="h4 mb-0">공지사항</h3>
+                            <a href="board-notice.html" class="btn btn-link p-0">
+                                더보기
+                                <i class="bx bx-plus fs-lg ms-2"></i>
+                            </a>
+                        </div>
+
+                        <div class="card-body py-3">
+                            <ul class="nav flex-column fs-sm">
+                                <li class="nav-item mb-1">
+                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
+                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">1</span>
+                                        <div class="fs-base">
+                                            마크엠 홈페이지 리뉴얼 오픈 안내
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-1">
+                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
+                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">2</span>
+                                        <div class="fs-base"> 제품군 소개: 포장 자동화 솔루션의 핵심</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-1">
+                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
+                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">3</span>
+                                        <div class="fs-base"> 적용 사례 업데이트: 실전 적용 현장 공개</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-1">
+                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
+                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">4</span>ya
+                                        <div class="fs-base"> 포장 자동화 솔루션 제품 특장점</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-1">
+                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
+                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">5</span>
+                                        <div class="fs-base"> 제품 A/S 및 유지보수 서비스 안내</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-7 offset-xl-1 mb-3 mt-3 mt-md-0">
+                    <div class="card border-0 bg-gradient-primary">
+                        <div class="card-body p-md-4 p-3 bg-size-cover d-flex flex-column align-items-center justify-content-space-between" style="background-image: url(/assets/img/landing/digital-agency/contact-bg.png); min-height: 234px;">
+                            <h3 class="h4 text-light mb-2">고객센터</h3>
+                            <div class="py-md-2 py-2 d-flex flex-column align-items-center justify-content-center mt-2">
+                                <h3 class="fs-5 fw-normal text-light opacity-75">
+                                    <span class="opacity-75 me-2">상담시간</span> 9:30 ~ 18:00
+                                </h3>
+                                <a href="mailto:email@example.com" class="display-6 text-light text-decoration-none">
+                                    <i class="bx bx-phone-call display-6 me-1 fw-light text-light opacity-75"></i>
+                                    1551-9244</a>
+                                <div class="pt-md-4 pt-3">
+                                    <a href="contacts.html" class="btn btn-md btn-light">문의하기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== 커뮤니티(Community) 끝 ===== -->
+</main>
+
+<!-- ===== 푸터(Footer) 시작 ===== -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+<!-- ===== 푸터(Footer) 끝 ===== -->
+
+<!-- ===== 맨 위로 가기 버튼 시작 ===== -->
+<a href="#top" class="btn-scroll-top" data-scroll>
+    <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+    <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+</a>
+<!-- ===== 맨 위로 가기 버튼 끝 ===== -->
+
+<!-- Vendor Scripts -->
+<script src="/assets/vendor/parallax-js/dist/parallax.min.js"></script>
+<script src="/assets/vendor/rellax/rellax.min.js"></script>
+<script src="/assets/vendor/@lottiefiles/lottie-player/dist/lottie-player.js"></script>
+<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+<!-- Main Theme Script -->
+<script src="/assets/js/theme.min.js"></script>
 </body>
 </html>

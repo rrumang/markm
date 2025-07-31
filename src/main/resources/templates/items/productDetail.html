@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light">
+<!-- Header -->
+<head>
+  <title>MARKM | 제품정보</title>
+  <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- ===== 페이지 로딩 스피너 시작 ===== -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>로딩중...</span>
+      </div>
+    </div>
+    <!-- ===== 페이지 로딩 스피너 끝 ===== -->
+
+
+    <main class="page-wrapper">
+      <!-- ===== 네비게이션바(Navbar) 시작 ===== -->
+      <header th:replace="~{fragments/nav :: nav}"></header>
+      <!-- ===== 네비게이션바(Navbar) 끝 ===== -->
+
+
+      <!-- ===== 히어로(Hero) 이미지 시작 ===== -->
+      <section class="position-relative bg-dark pt-lg-4" style="background: linear-gradient(90deg, #141e35 0%, #1a2e58 51.04%, #16223f 100%)">
+        <div class="jarallax d-none d-md-block" data-jarallax data-speed="0.35">
+          <div class="jarallax-img" style="background-image: url(/assets/img/landing/saas-5/hero-bg-pattern.png); filter: hue-rotate(334deg);"></div>
+          <div class="d-none d-md-block" style="height: 280px;"></div>
+          <div class="d-flex align-items-center justify-content-center position-absolute top-50 start-50 translate-middle w-100 h-100">
+            <div class="container" style="padding-top: 80px;">
+              <h2 class="h3 mb-md-3 mb-2 slogan-text">완벽한 마킹 솔루션, 노하우에 기술을 더하다</h2>
+              <p class="fs-lg banner-text">주식회사 마크엠</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ===== 히어로(Hero) 이미지 끝 ===== -->
+
+
+      <!-- ===== 브레드크럼(Breadcrumb) 시작 ===== -->
+      <nav class="container py-4 mb-2 my-lg-3"  aria-label="breadcrumb">
+        <ol class="breadcrumb justify-content-end mb-0">
+          <li class="breadcrumb-item">
+            <a href="/"><i class="bx bx-home-alt fs-lg me-1"></i>Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a th:href="@{/items/{category} (category=${category})}">제품소개</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">제품정보</li>
+        </ol>
+      </nav>
+      <!-- ===== 브레드크럼(Breadcrumb) 끝 ===== -->
+
+
+      <section class="container">
+        <div class="row">
+          <!-- ===== 사이드바(Sidebar) 시작 ===== -->
+          <aside th:replace="~{fragments/sidebarProduct :: sidebarProduct}"></aside>
+          <!-- ===== 사이드바(Sidebar) 끝 ===== -->
+
+
+          <!-- ===== 본문(제품정보) 시작 ===== -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4">
+            <div class="ps-md-3 ps-lg-0 pb-md-4">
+              <!-- Post title + Meta  -->
+              <div class="mb-5 pt-2 pb-lg-5">
+                <div class="row gy-4">
+                  <div class="col-md-5">
+                    <!-- Pagination: Pager -->
+                    <div class="swiper main-swiper" data-swiper-options='{
+                      "spaceBetween": 20,
+                      "loop": true,
+                      "navigation": {
+                        "prevEl": ".page-prev",
+                        "nextEl": ".page-next"
+                      }
+                    }'>
+                      <div class="swiper-wrapper">
+                        <!-- Item -->
+                        <div class="swiper-slide">
+                          <div class="ratio ratio-4x3 bg-secondary">
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center display-4"><img th:src="|/images/${item.fileName}|" alt="Cover" class="rounded-3 product-item-image"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-7">
+                    <div class="ms-xl-5 ms-lg-4 ps-xxl-34">
+                      <div class="d-flex align-items-center flex-wrap text-muted mb-lg-4 mb-md-4 mb-3">
+                        <div class="fs-xs border-end pe-3 me-3 mb-2">
+                          <span class="badge bg-faded-primary text-primary fs-base" th:text="${category1}"></span>
+                        </div>
+                        <div class="fs-sm pe-3 me-3 mb-2" th:text="${category2}"></div>
+                      </div>
+                      <h1 class="display-6 pb-md-3" th:text="${item.name}"></h1>
+
+                      <pre class="shadow-none border-0 pt-0 pb-2 px-0 m-0 fs-lg" th:utext="${item.content}"></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="mb-4">
+              <!-- 열전사 프린터 (TTO) -->
+              <div class="mb-5 pt-md-2">
+                <div class="d-flex flex-row align-items-center justify-content-between mb-2 pb-3">
+                  <h4 class="mb-0" th:text="${category2}"></h4>
+                  <a th:href="@{/items/{category} (category=${category})}" class="btn btn-outline-primary py-2 px-3 btn-link">
+                    목록
+                    <i class="bx bx-plus ms-1 me-n1 lead fs-sm"></i>
+                  </a>
+                </div>
+
+                <!-- Pagination (bullets) -->
+                <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- ===== 본문(제품정보) 끝 ===== -->
+      </section>
+    </main>
+
+    <!-- ===== 푸터(Footer) 시작 ===== -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- ===== 푸터(Footer) 끝 ===== -->
+
+
+    <!-- ===== 맨 위로 가기 버튼 시작 ===== -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+    <!-- ===== 맨 위로 가기 버튼 끝 ===== -->
+
+    <!-- Vendor Scripts -->
+    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main Theme Script -->
+    <script src="/assets/js/theme.min.js"></script>
+
+  </body>
+</html>

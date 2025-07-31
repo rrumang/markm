@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- TUI 에디터 CSS CDN -->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<!-- TUI 에디터 JS CDN -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<head th:replace="~{fragments/header :: header}" />
+<body>
+<div class="container">
+    <div th:replace="~{fragments/nav :: nav}"/>
+    <form th:action="@{/board/new}" th:object="${form}" id="frm" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="content" name="content">
+        <input type="hidden" id="type" name="type" th:value="${form.getType()}">
+        <div class="form-group">
+            <label th:for="title">제목</label>
+            <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요">
+        </div>
+        <div id="contents"></div>
+        <div class="form-group">
+            <label th:for="attachFile">첨부파일</label>
+            <input type="file" th:name="attachFile" class="file-selector-button">
+        </div>
+        <button type="button" id="btn_insert" onclick="insert();" class="btn btn-primary">등록</button>
+    </form>
+    <br/>
+    <div th:replace="~{fragments/footer :: footer}" />
+</div> <!-- /container -->
+</body>
+<!-- TUI 에디터 JS CDN -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    const editor = new toastui.Editor({
+        el: document.querySelector('#contents'),    // 에디터를 적용할 요소 (컨테이너)
+        height: '500px',                            // 에디터 영역의 높이 값 (OOOpx || auto)
+        initialEditType: 'wysiwyg',                 // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+        initialValue: '내용을 입력해 주세요.',           // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+        previewStyle: 'vertical',                   // 마크다운 프리뷰 스타일 (tab || vertical)
+        /* start of hooks */
+        hooks: {
+            async addImageBlobHook(blob, callback) { // 이미지 업로드 로직 커스텀
+                try {
+                    /*
+                     * 1. 에디터에 업로드한 이미지를 FormData 객체에 저장
+                     *    (이때, 컨트롤러 uploadEditorImage 메서드의 파라미터인 'image'와 formData에 append 하는 key('image')값은 동일해야 함)
+                     */
+                    const formData = new FormData();
+                    formData.append('image', blob);
+
+                    // 2. FileApiController - uploadEditorImage 메서드 호출
+                    const response = await fetch('/tui-editor/image-upload', {
+                        method : 'POST',
+                        body : formData,
+                    });
+
+                    // 3. 컨트롤러에서 전달받은 디스크에 저장된 파일명
+                    const filename = await response.text();
+                    console.log('서버에 저장된 파일명 : ', filename);
+
+                    // 4. addImageBlobHook의 callback 함수를 통해, 디스크에 저장된 이미지를 에디터에 렌더링
+                    const imageUrl = `/tui-editor/image-print?filename=${filename}`;
+                    callback(imageUrl, 'image alt attribute');
+
+                } catch (error) {
+                    console.error('업로드 실패 : ', error);
+                }
+            }
+        }
+        /* end of hooks */
+    });
+
+    //게시글 저장
+    async function insert() {
+        //alert("전송 : " + editor.getHTML());
+        // 1. 콘텐츠 입력 유효성 검사
+        if (editor.getMarkdown().length < 1) {
+            alert('에디터 내용을 입력해 주세요.');
+            throw new Error('editor content is required!');
+        }
+        $('#content').val(editor.getHTML());
+        //document.getElementById("content").value = editor.getHTML();
+
+        $('#frm').submit();
+    }
+</script>
+</html>

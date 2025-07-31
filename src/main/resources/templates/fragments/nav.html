@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<header th:fragment="nav" class="header navbar navbar-expand-lg bg-light shadow-sm fixed-top">
+    <div class="container px-3">
+        <a href="/" class="navbar-brand pe-3 py-1">
+            <img src="/assets/img/logo.png" width="136" alt="MARKM" class="d-none d-md-block">
+            <img src="/assets/img/logo.png" width="128" alt="MARKM" class="d-md-none">
+        </a>
+        <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body ms-lg-auto">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item me-5">
+                        <a href="/company/about" class="nav-link fw-semibold fs-lg">회사소개</a>
+                    </li>
+                    <li class="nav-item me-5">
+                        <a href="/items/thermalPrinter" class="nav-link fw-semibold fs-lg">제품소개</a>
+                    </li>
+                    <li class="nav-item me-5">
+                        <a href="board-notice.html" class="nav-link fw-semibold fs-lg">커뮤니티</a>
+                    </li>
+                    <li class="nav-item me-5">
+                        <a href="contacts.html" class="nav-link fw-semibold fs-lg">문의하기</a>
+                    </li>
+                    <li th:if="${not #strings.isEmpty(member.name)}" class="nav-item me-5">
+                        <a href="/admin/banner" class="nav-link fw-semibold fs-lg">관리하기</a>
+                    </li>
+                    <li th:if="${not #strings.isEmpty(member.name)}" class="nav-item">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="nav-link fw-semibold fs-lg" onclick="location.href='home.html'" type="submit">
+                                로그아웃
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</header>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
+<!-- Header -->
+<head>
+  <title>MARKM | 제품소개</title>
+  <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+  <!-- Body -->
+  <body>
+    <!-- ===== 페이지 로딩 스피너 시작 ===== -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>로딩중...</span>
+      </div>
+    </div>
+    <!-- ===== 페이지 로딩 스피너 끝 ===== -->
+
+    
+    <main class="page-wrapper">
+      <!-- ===== 네비게이션바(Navbar) 시작 ===== -->
+      <header th:replace="~{fragments/nav :: nav}"></header>
+      <!-- ===== 네비게이션바(Navbar) 끝 ===== -->
+
+
+      <!-- ===== 히어로(Hero) 이미지 시작 ===== -->
+      <section class="position-relative bg-dark pt-lg-4" style="background: linear-gradient(90deg, #141e35 0%, #1a2e58 51.04%, #16223f 100%)">
+        <div class="jarallax d-none d-md-block" data-jarallax data-speed="0.35">
+          <div class="jarallax-img" style="background-image: url(/assets/img/landing/saas-5/hero-bg-pattern.png); filter: hue-rotate(334deg);"></div>
+          <div class="d-none d-md-block" style="height: 280px;"></div>
+          <div class="d-flex align-items-center justify-content-center position-absolute top-50 start-50 translate-middle w-100 h-100">
+            <div class="container" style="padding-top: 80px;">
+              <h2 class="h3 mb-md-3 mb-2 slogan-text">완벽한 마킹 솔루션, 노하우에 기술을 더하다</h2>
+              <p class="fs-lg banner-text">주식회사 마크엠</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ===== 히어로(Hero) 이미지 끝 ===== -->
+
+
+      <!-- ===== 브레드크럼(Breadcrumb) 시작 ===== -->
+      <nav class="container py-4 mb-2 my-lg-3"  aria-label="breadcrumb">
+        <ol class="breadcrumb justify-content-end mb-0">
+          <li class="breadcrumb-item">
+            <a href="/"><i class="bx bx-home-alt fs-lg me-1"></i>Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">제품소개</li>
+        </ol>
+      </nav>
+      <!-- ===== 브레드크럼(Breadcrumb) 끝 ===== -->
+
+
+      <!-- Page content -->
+      <section class="container">
+        <div class="row">
+          <!-- ===== 사이드바(Sidebar) 시작 ===== -->
+          <aside th:replace="~{fragments/sidebarProduct :: sidebarProduct}"></aside>
+          <!-- ===== 사이드바(Sidebar) 끝 ===== -->
+
+
+          <!-- ===== 본문(제품소개) 시작 ===== -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4">
+            <div class="ps-md-3 ps-lg-0 pb-md-4">
+              
+              <!-- Page title + Layout switcher + Search form -->
+              <form method="get" th:object="${searchForm}" th:action="@{/items/{category} (category=${category})}">
+                <div class="row align-items-end justify-content-end gy-3 mb-4 pb-lg-3 pb-1">
+                  <div class="col-lg-7 col-md-8">
+                    <div class="row gy-2">
+                      <div class="col-lg-4 col-sm-6 justify-content-end d-flex">
+                        <div class="d-flex align-items-center">
+                          <div class="nav flex-nowrap me-sm-4 me-3">
+                            <a th:href="@{/items/{category} (category=${category})}" class="nav-link me-2 p-0 active" aria-label="List view">
+                              <i class="bx bx-list-ul fs-4"></i>
+                            </a>
+                            <a th:href="@{/items/{category} (category=${category})}" class="nav-link p-0" aria-label="Grid view">
+                              <i class="bx bx-grid-alt fs-4"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-8 col-sm-6 d-flex gap-2">
+                          <input type="hidden" th:field="*{category1}">
+                          <input type="hidden" th:field="*{category2}">
+                          <div class="input-group ">
+                              <input type="text" th:field="*{name}" class="form-control pe-5 rounded" placeholder="제품명">
+                          </div>
+                          <button type="submit" class="btn btn-sm btn-primary rounded-2">검색</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Item -->
+              <article th:each="item : ${items}" class="card border-0 shadow-sm overflow-hidden mb-4">
+                <div class="row g-0">
+                  <div class="col-sm-4 position-relative bg-position-center bg-repeat-0 bg-size-cover" th:style="'background-image: url(/images/' + ${item.fileName} + '); min-height: 15rem;'"></div>
+                  <div class="col-sm-8">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none"><span th:text="${category1}"></span></a>
+                        <span class="fs-sm text-muted border-start ps-3 ms-3"><span th:text="${category2}"></span></span>
+                      </div>
+                      <h3 class="h4">
+                        <a th:href="@{/items/{id}/view (id=${item.id})}"><span th:text="${item.name}" class="text-success"></span></a>
+                      </h3>
+                      <p><span th:utext="${item.content}"></span></p>
+                      <div class="d-flex justify-content-end">
+                        <a th:href="@{/items/{id}/view (id=${item.id})}" class="btn btn-link p-0">
+                          자세히 보기
+                          <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <!-- Item -->
+              <div th:if="${#lists.isEmpty(items)}" class="card bg-secondary border-0 overflow-hidden mb-5">
+                <div class="card-body d-flex align-items-center justify-content-center py-5 my-5">
+                  <p class="text-center fs-sm opacity-60 text-muted py-5 my-md-3">
+                    <i class='bx bxs-spreadsheet opacity-50 fs-3 mb-1'></i><br>
+                    등록된 제품이 없습니다.</p>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+<!--              <nav aria-label="Page navigation example">-->
+<!--                <ul class="pagination justify-content-center pt-lg-3 pt-1">-->
+<!--                  <li class="page-item">-->
+<!--                    <a href="#" class="page-link" aria-label="Previous page">-->
+<!--                      <i class="bx bx-chevron-left mx-n1"></i>-->
+<!--                    </a>-->
+<!--                  </li>-->
+<!--                  <li class="page-item disabled d-sm-none">-->
+<!--                    <span class="page-link text-body">2 / 4</span>-->
+<!--                  </li>-->
+<!--                  <li class="page-item d-none d-sm-block">-->
+<!--                    <a href="#" class="page-link">1</a>-->
+<!--                  </li>-->
+<!--                  <li class="page-item active d-none d-sm-block" aria-current="page">-->
+<!--                    <span class="page-link">-->
+<!--                      2-->
+<!--                      <span class="visually-hidden">(current)</span>-->
+<!--                    </span>-->
+<!--                  </li>-->
+<!--                  <li class="page-item d-none d-sm-block">-->
+<!--                    <a href="#" class="page-link">3</a>-->
+<!--                  </li>-->
+<!--                  <li class="page-item d-none d-sm-block">-->
+<!--                    <a href="#" class="page-link">4</a>-->
+<!--                  </li>-->
+<!--                  <li class="page-item">-->
+<!--                    <a href="#" class="page-link" aria-label="Next page">-->
+<!--                      <i class="bx bx-chevron-right mx-n1"></i>-->
+<!--                    </a>-->
+<!--                  </li>-->
+<!--                </ul>-->
+<!--              </nav>-->
+
+            </div>
+          </div>
+          <!-- ===== 본문(제품소개) 끝 ===== -->
+        </div>
+      </section>      
+    </main>
+
+    <!-- ===== 푸터(Footer) 시작 ===== -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- ===== 푸터(Footer) 끝 ===== -->
+
+
+    <!-- ===== 맨 위로 가기 버튼 시작 ===== -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+    <!-- ===== 맨 위로 가기 버튼 끝 ===== -->
+
+
+    <!-- Main Theme Script -->
+    <script src="/assets/js/theme.min.js"></script>
+  </body>
+</html>

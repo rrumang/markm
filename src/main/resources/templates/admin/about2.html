@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light">
+<!-- Header -->
+<head>
+  <title>관리하기 - 찾아오시는길</title>
+  <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+  <!-- Body -->
+  <body>
+    <!-- ===== 페이지 로딩 스피너 시작 ===== -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+    <!-- ===== 페이지 로딩 스피너 끝 ===== -->
+
+
+    <main class="page-wrapper">
+      <!-- ===== 네비게이션바(Navbar) 시작 ===== -->
+      <header th:replace="~{fragments/nav :: nav}"></header>
+      <!-- ===== 네비게이션바(Navbar) 끝 ===== -->
+
+
+      <!-- Page content -->
+      <section class="container pt-5">
+        <div class="row ">
+          <!-- ===== 사이드바(Sidebar) 시작 ===== -->
+          <aside th:replace="~{fragments/sidebarAdmin :: sidebarAdmin}"></aside>
+          <!-- ===== 사이드바(Sidebar) 끝 ===== -->
+
+
+          <!-- ===== 본문(찾아오시는 길) 시작 ===== -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+            <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
+              <h1 class="h3 pb-1">찾아오시는 길</h1>
+
+              <form th:action="@{/admin/about2/new}" method="post" id="frm" enctype="multipart/form-data" class="needs-validation pb-3 pb-lg-4" novalidate>
+                <input type="hidden" id="id" name="id" th:value="${about2.getId()}"/>
+                <input type="hidden" id="type" name="type" th:value="${about2.getType()}"/>
+                <input type="hidden" id="title" name="title" th:value="${about2.getTitle()}"/>
+                <input type="hidden" id="content" name="content" th:value="${about2.getContent()}"/>
+                <div class="row pb-2">
+                  <div class="col-12 mb-4">
+                    <!-- Toast UI Editor container -->
+                    <div id="contents"></div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end mb-3">
+                  <button type="button" id="btn_update" onclick="update();" class="btn btn-primary">적용</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+          <!-- ===== 본문(찾아오시는 길) 끝 ===== -->
+        </div>
+      </section>
+    </main>
+
+
+    <!-- ===== 푸터(Footer) 시작 ===== -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- ===== 푸터(Footer) 끝 ===== -->
+
+
+    <!-- ===== 버튼(Back to top button) 시작 ===== -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+    <!-- ===== 버튼(Back to top button) 끝 ===== -->
+
+
+    <!-- Vendor Scripts -->
+    <script src="/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+
+    <!-- Main Theme Script -->
+    <script src="/assets/js/theme.min.js"></script>
+
+    <!-- TUI 에디터 JS CDN -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+      const editor = new toastui.Editor({
+        el: document.querySelector('#contents'),                // 에디터를 적용할 요소 (컨테이너)
+        height: '500px',                                        // 에디터 영역의 높이 값 (OOOpx || auto)
+        initialEditType: 'wysiwyg',                             // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+        initialValue: document.getElementById("content").value, // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+        previewStyle: 'vertical',                               // 마크다운 프리뷰 스타일 (tab || vertical)
+        /* start of hooks */
+        hooks: {
+          async addImageBlobHook(blob, callback) { // 이미지 업로드 로직 커스텀
+            try {
+              /*
+               * 1. 에디터에 업로드한 이미지를 FormData 객체에 저장
+               *    (이때, 컨트롤러 uploadEditorImage 메서드의 파라미터인 'image'와 formData에 append 하는 key('image')값은 동일해야 함)
+               */
+              const formData = new FormData();
+              formData.append('image', blob);
+
+              // 2. FileApiController - uploadEditorImage 메서드 호출
+              const response = await fetch('/tui-editor/image-upload', {
+                method : 'POST',
+                body : formData,
+              });
+
+              // 3. 컨트롤러에서 전달받은 디스크에 저장된 파일명
+              const filename = await response.text();
+              console.log('서버에 저장된 파일명 : ', filename);
+
+              // 4. addImageBlobHook의 callback 함수를 통해, 디스크에 저장된 이미지를 에디터에 렌더링
+              const imageUrl = `/tui-editor/image-print?filename=${filename}`;
+              callback(imageUrl, 'image alt attribute');
+              debugger;
+
+            } catch (error) {
+              console.error('업로드 실패 : ', error);
+            }
+          }
+        }
+        /* end of hooks */
+      });
+
+      //제품 저장
+      async function update() {
+        //alert("전송 : " + editor.getHTML());
+        // 1. 콘텐츠 입력 유효성 검사
+        if (editor.getMarkdown().length < 1) {
+          alert('에디터 내용을 입력해 주세요.');
+          throw new Error('editor content is required!');
+        }
+        $('#content').val(editor.getHTML());
+        //document.getElementById("content").value = editor.getHTML();
+
+
+        $('#frm').submit();
+      }
+    </script>
+  </body>
+</html>

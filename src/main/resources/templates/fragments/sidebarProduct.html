@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<aside th:fragment="sidebarProduct" class="col-lg-3 col-md-4 border-md-end pb-3 pb-md-5">
+    <div class="position-sticky top-0" style="top: 105px !important;">
+        <div class="text-left">
+            <div class="mx-auto mb-md-3 pt-md-3 pb-1 rounded-3 position-relative overflow-hidden text-center">
+                <span class="bg-gradient-primary position-absolute top-0 start-0 w-100 h-100 opacity-10 d-none d-md-block"></span>
+                <h2 class="h4 mb-1 mt-3">제품소개</h2>
+                <p class="pb-2">Products Info</p>
+            </div>
+            <button type="button" class="btn btn-secondary w-100 d-md-none mt-n2 mb-3" data-bs-toggle="collapse" data-bs-target="#account-menu">
+                제품소개 메뉴
+                <i class="bx bx-chevron-down fs-lg ms-1"></i>
+            </button>
+            <div id="account-menu" class="list-group list-group-flush collapse d-md-block">
+                <!-- UCS -->
+                <div class="list-group-item p-0">
+                    <a href="#ucs-menu" th:classappend="${category1 == 'UCS' ? 'active' : ''}" class="list-group-item-action d-flex align-items-center text-decoration-none px-3 py-2 my-2" data-bs-toggle="collapse">
+                        UCS
+                        <i class="bx bx-chevron-down ms-auto"></i>
+                    </a>
+                    <div th:classappend="${category1 == 'UCS' ? 'show' : ''}" class="collapse" id="ucs-menu">
+                        <div class="list-group list-group-flush">
+                            <a href="/items/thermalPrinter" th:classappend="${category2 == '열전사프린터' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">열전사프린터</a>
+                            <a href="/items/labelPrinter" th:classappend="${category2 == '라벨프린터' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">라벨프린터</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- EDDING -->
+                <div class="list-group-item p-0">
+                    <a href="#edding-menu" th:classappend="${category1 == 'EDDING' ? 'active' : ''}" class="list-group-item-action d-flex align-items-center text-decoration-none px-3 py-2 my-2" data-bs-toggle="collapse">
+                        EDDING
+                        <i class="bx bx-chevron-down ms-auto"></i>
+                    </a>
+                    <div th:classappend="${category1 == 'EDDING' ? 'show' : ''}" class="collapse" id="edding-menu">
+                        <div class="list-group list-group-flush">
+                            <a href="/items/inLine" th:classappend="${category2 == 'in-line 12/25' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">in-line 12/25</a>
+                            <a href="/items/inLinePro" th:classappend="${category2 == 'in-line pro 12/25' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">in-line pro 12/25</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- MACSA -->
+                <div class="list-group-item p-0">
+                    <a href="#macsa-menu" th:classappend="${category1 == 'MACSA' ? 'active' : ''}" class="list-group-item-action d-flex align-items-center text-decoration-none px-3 py-2 my-2" data-bs-toggle="collapse">
+                        MACSA
+                        <i class="bx bx-chevron-down ms-auto"></i>
+                    </a>
+                    <div th:classappend="${category1 == 'MACSA' ? 'show' : ''}" class="collapse" id="macsa-menu">
+                        <div class="list-group list-group-flush">
+                            <a href="/items/lcx" th:classappend="${category2 == 'LCX' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">LCX</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <title>관리자 | 로그인</title>
+  <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+  <!-- Body -->
+  <body>
+    
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>로딩중...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "fixed-top" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg position-absolute navbar-sticky">
+        <div class="container px-3">
+          <a href="signin.html" class="navbar-brand pe-3 py-1">
+            <img src="/assets/img/logo.png" width="136" alt="MARKM">
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Page content -->
+      <section class="position-relative h-100 pt-4 pb-4">
+
+        <!-- Sign in form -->
+        <div class="container d-flex flex-wrap justify-content-center justify-content-xl-start h-100 pt-5">
+          <div class="w-100 align-self-end pt-1 pt-md-4 pb-4" style="max-width: 526px;">
+            <h3 class="text-center text-xl-start pb-2">관리자 로그인</h3>
+
+
+            <form class="needs-validation mb-2" novalidate th:action th:object="${form}" method="post">
+              <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+              </div>
+
+              <div class="position-relative mb-4">
+                <label for="email" class="form-label fs-base">E-mail주소</label>
+                <input type="text" id="email" th:field="*{email}" class="form-control form-control-lg" th:errorclass="field-error" required>
+                <div class="invalid-feedback position-absolute start-0 top-100 field-error" th:errors="*{email}">이메일을 입력해주세요.</div>
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label fs-base">비밀번호</label>
+                <div class="password-toggle">
+                  <input type="password" id="password" th:field="*{password}" class="form-control form-control-lg" th:errorclass="field-error" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox">
+                    <span class="password-toggle-indicator"></span>
+                  </label>
+                  <div class="invalid-feedback position-absolute start-0 top-100 field-error" th:errors="*{password}">비밀번호를 입력해주세요.</div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary shadow-primary btn-lg w-100">로그인</button>
+              <button class="w-100 btn btn-secondary btn-lg" th:onclick="|location.href='@{/}'|" type="button">취소</button>
+            </form>
+
+          </div>
+          <div class="w-100 align-self-end">
+            <p class="nav d-block fs-xs text-center text-xl-start pb-2 mb-0">
+              &copy; MARKM All rights reserved.
+            </p>    
+          </div>
+        </div>
+        
+        <!-- Background -->
+        <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block opacity-75" style="background-image: url(assets/img/landing/hero_01.jpeg);"></div>
+      </section>
+    </main>
+
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+    
+    <!-- Main Theme Script -->
+    <script src="assets/js/theme.min.js"></script>
+  </body>
+</html>

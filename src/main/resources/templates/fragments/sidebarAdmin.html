@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<aside th:fragment="sidebarAdmin" class="col-lg-3 col-md-4 border-end-md pb-5 mt-n5">
+    <div class="position-sticky top-0 admin-sidebar">
+        <div class="text-center pt-5 mt-3 pb-5">
+            <div class="bg-secondary mt-2 mt-lg-4 pt-2">
+                <h2 class="h6 mb-0">관리자</h2>
+                <p class="mb-3 pb-2 fs-sm">jonny@email.com</p>
+            </div>
+
+            <button type="button" class="btn btn-secondary w-100 d-md-none mt-n2 mb-3" data-bs-toggle="collapse" data-bs-target="#account-menu">
+                <i class="bx bxs-user-detail fs-xl me-2"></i>
+                관리하기 메뉴
+                <i class="bx bx-chevron-down fs-lg ms-1"></i>
+            </button>
+
+            <div id="account-menu" class="list-group list-group-flush collapse d-md-block">
+
+                <div>
+                    <a href="/admin/banner" th:classappend="${menu1 == 'banner' ? 'active' : ''}" class="list-group-item list-group-item-action d-flex align-items-center fw-semibold">
+                        <i class="bx bx-home fs-xl opacity-60 me-2"></i>
+                        홈
+                    </a>
+                </div>
+
+                <hr class="my-2">
+
+                <div>
+                    <a href="#about-submenu" th:classappend="${menu1 == 'about' ? 'active' : ''}" class="list-group-item list-group-item-action d-flex align-items-center fw-semibold" data-bs-toggle="collapse">
+                        <i class="bx bx-building-house fs-xl opacity-60 me-2"></i>
+                        회사소개
+                        <i class="bx bx-chevron-down ms-auto"></i>
+                    </a>
+                    <div th:classappend="${menu1 == 'about' ? 'show' : ''}"  class="collapse" id="about-submenu">
+                        <div class="list-group list-group-flush text-start">
+                            <a href="/admin/about" th:classappend="${menu2 == 'about' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">- CEO 인사말</a>
+                            <a href="/admin/about2" th:classappend="${menu2 == 'about2' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">- 찾아오시는 길</a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-2">
+
+                <div>
+                    <a href="#product-submenu" th:classappend="${menu1 == 'product' ? 'active' : ''}" class="list-group-item list-group-item-action d-flex align-items-center fw-semibold" data-bs-toggle="collapse">
+                        <i class="bx bx-printer fs-xl opacity-60 me-2"></i>
+                        제품소개
+                        <i class="bx bx-chevron-down ms-auto"></i>
+                    </a>
+                    <div  th:classappend="${menu1 == 'product' ? 'show' : ''}" class="collapse" id="product-submenu">
+                        <div class="list-group list-group-flush text-start">
+                            <a href="/admin/items/ucs" th:classappend="${menu2 == 'ucs' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">- UCS</a>
+                            <a href="/admin/items/edding" th:classappend="${menu2 == 'edding' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">- EDDING</a>
+                            <a href="/admin/items/macsa" th:classappend="${menu2 == 'macsa' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">- MACSA</a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-2">
+
+                <div>
+                    <a href="#board-submenu" th:classappend="${menu1 == 'board' ? 'active' : ''}" class="list-group-item list-group-item-action d-flex align-items-center fw-semibold" data-bs-toggle="collapse" >
+                        <i class="bx bx-list-ul fs-xl opacity-60 me-2"></i>
+                        커뮤니티
+                        <i class="bx bx-chevron-down ms-auto"></i>
+                    </a>
+                    <div th:classappend="${menu1 == 'board' ? 'show' : ''}" class="collapse" id="board-submenu">
+                        <div class="list-group list-group-flush text-start">
+                            <a href="/admin/board/notice" th:classappend="${menu2 == 'notice' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">- 공지사항</a>
+                            <a href="/admin/board/archive" th:classappend="${menu2 == 'archive' ? 'active' : ''}" class="list-group-item list-group-item-action ps-4">- 자료실</a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-2">
+
+                <div>
+                    <a href="/admin/contacts" th:classappend="${menu1 == 'contacts' ? 'active' : ''}" class="list-group-item list-group-item-action d-flex align-items-center fw-semibold">
+                        <i class="bx bx-message-dots fs-xl opacity-60 me-2"></i>
+                        문의하기
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</aside>

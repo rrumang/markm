@@ -17,4 +17,7 @@ public class ItemForm {
     private int price;
     private int stockQuantity;
     private MultipartFile attachFile;
+    private String fileName;
+    private String category1;
+    private String category2;
 }

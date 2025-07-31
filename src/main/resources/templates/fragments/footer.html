@@ -1,5 +1,57 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div class="footer" th:fragment="footer">
-    <p>&copy; Hello Shop V2</p>
-</div>
+<!-- ===== 푸터(Footer) 시작 ===== -->
+<footer class="footer bg-dark pt-3 pb-4" data-bs-theme="dark">
+    <div class="container pt-1 pt-md-3 pt-lg-4 pt-xl-4">
+        <div class="row">
+            <div class="col-lg-5 col-xl-4 mb-4 mb-md-5 mb-lg-0">
+                <div class="d-flex align-items-center pb-3 mb-4">
+                    <div class="navbar-brand text-dark p-0 pe-1 me-0">
+                        <img src="/assets/img/logo.png" width="130" alt="MARKM" class="d-none d-md-block">
+                        <img src="/assets/img/logo.png" width="120" alt="MARKM" class="d-block d-md-none">
+                    </div>
+                    <hr class="vr mt-2 mx-3" style="height: 26px;">
+                    <div class="text-white fw-semibold ps-1">주식회사 마크엠</div>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <p class="fs-md text-body p-0 pt-1 pb-0 mb-0">본사: 대전광역시 유성구 문지로 272-16, 403호</p>
+                    </li>
+                    <li class="nav-item">
+                        <p class="fs-md text-body px-0 pt-1 pb-0 mb-0">경기지사 : 경기도 의왕시 광진말로 54, A315호</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="d-md-flex align-items-center justify-content-between pt-sm-2 pt-md-4 pt-lg-5 pb-2 mt-4">
+            <ul class="nav order-md-1 ms-n3 ms-md-0 mb-3 mb-md-0">
+                <li class="nav-item pe-3">
+                    <p class="fs-sm mb-0 pb-0 text-muted">대표: <span class="text-body ms-1">송영민</span></p>
+                </li>
+                <li class="nav-item pe-3">
+                    <p class="fs-sm mb-0 pb-0 text-muted">사업자번호: <span class="text-body ms-1">270-81-02417</span></p>
+                </li>
+            </ul>
+            <p class="nav d-block fs-sm mb-0 order-md-2">
+                <span class="text-body">&copy; MARKM All rights reserved. </span>
+            </p>
+        </div>
+    </div>
+</footer>
+<!-- ===== 푸터(Footer) 끝 ===== -->
+
+<!-- ===== 맨 위로 가기 버튼 시작 ===== -->
+<a href="#top" class="btn-scroll-top" data-scroll>
+    <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+    <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+</a>
+<!-- ===== 맨 위로 가기 버튼 끝 ===== -->
+
+
+<!-- Vendor Scripts -->
+<script src="/assets/vendor/parallax-js/dist/parallax.min.js"></script>
+<script src="/assets/vendor/rellax/rellax.min.js"></script>
+<script src="/assets/vendor/@lottiefiles/lottie-player/dist/lottie-player.js"></script>
+<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+
+<!-- Main Theme Script -->
+<script src="/assets/js/theme.min.js"></script>

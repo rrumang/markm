@@ -1,5 +1,6 @@
 package jpabarcode.jpashop.domain.item;
 
+import jpabarcode.jpashop.domain.BaseEntity;
 import jpabarcode.jpashop.domain.Category;
 import jpabarcode.jpashop.domain.UploadFile;
 import jpabarcode.jpashop.exception.NotEnoughStockException;
@@ -14,7 +15,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter @Setter
-public class Item {
+public class Item extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "item_id")
@@ -25,6 +26,8 @@ public class Item {
     private int price;
     private int stockQuantity;
     private String fileName;
+    private String category1;
+    private String category2;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();

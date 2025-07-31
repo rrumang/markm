@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light">
+<!-- Header -->
+<head>
+  <title>관리하기 - 제품등록</title>
+  <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+  <!-- Body -->
+  <body>
+    <!-- ===== 페이지 로딩 스피너 시작 ===== -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+    <!-- ===== 페이지 로딩 스피너 끝 ===== -->
+
+    <main class="page-wrapper">
+      <!-- ===== 네비게이션바(Navbar) 시작 ===== -->
+      <header th:replace="~{fragments/nav :: nav}"></header>
+      <!-- ===== 네비게이션바(Navbar) 끝 ===== -->
+
+      <!-- Page content -->
+      <section class="container pt-5">
+        <div class="row ">
+
+          <!-- ===== 사이드바(Sidebar) 시작 ===== -->
+          <aside th:replace="~{fragments/sidebarAdmin :: sidebarAdmin}"></aside>
+          <!-- ===== 사이드바(Sidebar) 끝 ===== -->
+
+
+          <!-- ===== 본문(제품소개) 시작 ===== -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+            <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
+              <div class="d-flex justify-content-between align-items-center gap-4 mb-4">
+                <h1 class="h3 mb-0">제품 등록</h1>
+              </div>
+              
+              <form th:object="${form}" method="post" id="frm" action="/admin/items/new" enctype="multipart/form-data" class="needs-validation pb-3 pb-lg-4" novalidate>
+                <input type="hidden" id="content" th:field="*{content}">
+                <input type="hidden" id="category1" name="category1" th:value="${menu2}">
+                <div class="row pb-2">
+                  <div class="col-12 mb-3">
+                    <select th:if="${menu2 == 'ucs'}" th:field="*{category2}" class="form-select">
+                      <option th:value="''">카테고리 선택</option>
+                      <option th:value="열전사프린터" th:text="열전사프린터"></option>
+                      <option th:value="라벨프린터" th:text="라벨프린터"></option>
+                    </select>
+                    <select th:if="${menu2 == 'edding'}" th:field="*{category2}" class="form-select">
+                      <option th:value="''">카테고리 선택</option>
+                      <option th:value="'in-line 12/25'">in-line 12/25</option>
+                      <option th:value="'in-line pro 12/25'">in-line pro 12/25</option>
+                    </select>
+                    <select th:if="${menu2 == 'macsa'}" th:field="*{category2}" class="form-select">
+                      <option th:value="''">카테고리 선택</option>
+                      <option th:value="LCX" th:text="LCX"></option>
+                    </select>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label th:for="name" class="form-label">제품명</label>
+                    <input type="text" th:field="*{name}" class="form-control form-control-lg" placeholder="제품명을 입력해 주세요.">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label th:for="attachFile" class="form-label">제품이미지</label>
+                    <input type="file" id="attachFile" th:name="attachFile" class="form-control">
+                    <div id="preview" style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;"></div>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label for="contents" class="form-label">상세 설명</label>
+                    <!-- Toast UI Editor container -->
+                    <div id="contents"></div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end mb-3">
+                  <button type="button" th:onclick="@{/admin/items/{category} (category=${menu2})}" class="btn btn-secondary me-3">취소</button>
+                  <button type="submit" class="btn btn-primary">등록</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+          <!-- ===== 본문(제품소개) 끝 ===== -->
+        </div>
+      </section>
+    </main>
+
+
+    <!-- ===== 푸터(Footer) 시작 ===== -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- ===== 푸터(Footer) 끝 ===== -->
+
+
+    <!-- ===== 맨 위로 가기 버튼 시작 ===== -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+    <!-- ===== 맨 위로 가기 버튼 끝 ===== -->
+
+
+    <!-- Vendor Scripts -->
+    <script src="/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+
+    <!-- Main Theme Script -->
+    <script src="/assets/js/theme.min.js"></script>
+    
+    <!-- Toast UI Editor CSS & JS (CDN) -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" >
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+      // 이미지 미리보기 및 삭제 기능
+      document.addEventListener('DOMContentLoaded', function() {
+        let selectedFiles = [];
+        const input = document.getElementById('attachFile');
+        const preview = document.getElementById('preview');
+        if (input && preview) {
+          input.addEventListener('change', function() {
+            selectedFiles = Array.from(input.files);
+            renderPreview();
+          });
+
+          function renderPreview() {
+            preview.innerHTML = '';
+            selectedFiles.forEach((file, idx) => {
+              if (!file.type.startsWith('image/')) return;
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                const wrapper = document.createElement('div');
+                wrapper.style.position = 'relative';
+                wrapper.style.display = 'inline-block';
+                wrapper.style.width = '100px';
+                wrapper.style.height = '70px';
+                wrapper.style.overflow = 'hidden';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                img.style.display = 'block';
+                img.style.borderRadius = '5px';
+                img.style.border = '1px solid #dbdbdb';
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = '×';
+                btn.style.position = 'absolute';
+                btn.style.top = '2px';
+                btn.style.right = '2px';
+                btn.style.background = 'rgba(0,0,0,0.5)';
+                btn.style.color = '#fff';
+                btn.style.border = 'none';
+                btn.style.borderRadius = '6px';
+                btn.style.width = '20px';
+                btn.style.height = '20px';
+                btn.style.cursor = 'pointer';
+                btn.style.fontSize = '18px';
+                btn.style.display = 'flex';
+                btn.style.alignItems = 'center';
+                btn.style.justifyContent = 'center';
+                btn.addEventListener('click', function() {
+                  selectedFiles.splice(idx, 1);
+                  renderPreview();
+                });
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(btn);
+                preview.appendChild(wrapper);
+              };
+              reader.readAsDataURL(file);
+            });
+          }
+
+          // 폼 제출 시 selectedFiles만 업로드
+          const form = input.closest('form');
+          if (form) {
+            form.addEventListener('submit', function(e) {
+              // 1. 콘텐츠 입력 유효성 검사
+              if (editor.getMarkdown().length < 1) {
+                alert('에디터 내용을 입력해 주세요.');
+                throw new Error('editor content is required!');
+              }
+              $('#content').val(editor.getHTML());
+
+              if (selectedFiles.length > 0) {
+                const dt = new DataTransfer();
+                selectedFiles.forEach(f => dt.items.add(f));
+                input.files = dt.files;
+              }
+            });
+          }
+        }
+      });
+
+      const editor = new toastui.Editor({
+        el: document.querySelector('#contents'),                // 에디터를 적용할 요소 (컨테이너)
+        height: '500px',                                        // 에디터 영역의 높이 값 (OOOpx || auto)
+        initialEditType: 'wysiwyg',                             // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+        initialValue: '내용을 입력해 주세요.',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+        previewStyle: 'vertical',                               // 마크다운 프리뷰 스타일 (tab || vertical)
+        /* start of hooks */
+        hooks: {
+          async addImageBlobHook(blob, callback) { // 이미지 업로드 로직 커스텀
+            try {
+              /*
+               * 1. 에디터에 업로드한 이미지를 FormData 객체에 저장
+               *    (이때, 컨트롤러 uploadEditorImage 메서드의 파라미터인 'image'와 formData에 append 하는 key('image')값은 동일해야 함)
+               */
+              const formData = new FormData();
+              formData.append('image', blob);
+
+              // 2. FileApiController - uploadEditorImage 메서드 호출
+              const response = await fetch('/tui-editor/image-upload', {
+                method : 'POST',
+                body : formData,
+              });
+
+              // 3. 컨트롤러에서 전달받은 디스크에 저장된 파일명
+              const filename = await response.text();
+              console.log('서버에 저장된 파일명 : ', filename);
+
+              // 4. addImageBlobHook의 callback 함수를 통해, 디스크에 저장된 이미지를 에디터에 렌더링
+              const imageUrl = `/tui-editor/image-print?filename=${filename}`;
+              callback(imageUrl, 'image alt attribute');
+              debugger;
+
+            } catch (error) {
+              console.error('업로드 실패 : ', error);
+            }
+          }
+        }
+        /* end of hooks */
+      });
+    </script>
+
+  </body>
+</html>

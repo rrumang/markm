@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light">
+<!-- Header -->
+<head>
+  <title>관리하기 - 홈</title>
+  <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+  <!-- Body -->
+  <body>
+    <!-- ===== 페이지 로딩 스피너 시작 ===== -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+    <!-- ===== 페이지 로딩 스피너 끝 ===== -->
+
+
+    <main class="page-wrapper">=
+      <!-- ===== 네비게이션바(Navbar) 시작 ===== -->
+      <header th:replace="~{fragments/nav :: nav}"></header>
+      <!-- ===== 네비게이션바(Navbar) 끝 ===== -->
+
+
+      <section class="container pt-5">
+        <div class="row ">
+
+          <!-- ===== 사이드바(Sidebar) 시작 ===== -->
+          <aside th:replace="~{fragments/sidebarAdmin :: sidebarAdmin}"></aside>
+          <!-- ===== 사이드바(Sidebar) 끝 ===== -->
+
+
+          <!-- ===== 본문(홈) 시작 ===== -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+            <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
+              <div class="d-flex justify-content-between align-items-center gap-4 mb-4">
+                <h1 class="h3 mb-0">홈 (배너 관리)</h1>
+              </div>
+              
+              <form th:action="@{/admin/banner/new}" id="frm" method="post" enctype="multipart/form-data" class="needs-validation pb-3 pb-lg-4" novalidate>
+                <div class="bg-secondary px-3 pt-3 pb-2 rounded-3 mb-4">
+                  <div class="row g-2 align-items-center">
+                    <div class="col-auto">
+                      <label for="title1" class="form-label" style="width: 46px;">제목</label>
+                    </div>
+                    <div class="col">
+                      <input type="hidden" id="id1" name="id1" th:value="${banner1.getId()}">
+                      <input type="hidden" id="fileName1" name="fileName1" th:value="${banner1.getFileName()}">
+                      <input type="text" class="form-control" id="title1" name="title1" th:value="${banner1.getTitle()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label for="content1" class="form-label" style="width: 46px;">내용</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="content1" name="content1" th:value="${banner1.getContent()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label class="form-label" for="attachFile1" style="width: 46px;">이미지1</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control" type="file" id="attachFile1" name="attachFile1" accept="image/*">
+                      <div id="preview-1" style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-secondary px-3 pt-3 pb-2 rounded-3 mb-4">
+                  <div class="row g-2 align-items-center">
+                    <div class="col-auto">
+                      <label for="title2" class="form-label" style="width: 46px;">제목</label>
+                    </div>
+                    <div class="col">
+                      <input type="hidden" id="id2" name="id2" th:value="${banner2.getId()}">
+                      <input type="hidden" id="fileName2" name="fileName2" th:value="${banner2.getFileName()}">
+                      <input type="text" class="form-control" id="title2" name="title2" th:value="${banner2.getTitle()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label for="content2" class="form-label" style="width: 46px;">내용</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="content2" name="content2" th:value="${banner2.getContent()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label class="form-label" for="attachFile2" style="width: 46px;">이미지2</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control" type="file" id="attachFile2" name="attachFile2" accept="image/*">
+                      <div id="preview-2" style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-secondary px-3 pt-3 pb-2 rounded-3 mb-4">
+                  <div class="row g-2 align-items-center">
+                    <div class="col-auto">
+                      <label for="title3" class="form-label" style="width: 46px;">제목</label>
+                    </div>
+                    <div class="col">
+                      <input type="hidden" id="id3" name="id3" th:value="${banner3.getId()}">
+                      <input type="hidden" id="fileName3" name="fileName3" th:value="${banner3.getFileName()}">
+                      <input type="text" class="form-control" id="title3" name="title3" th:value="${banner3.getTitle()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label for="content3" class="form-label" style="width: 46px;">내용</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="content3" name="content3" th:value="${banner3.getContent()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label class="form-label" for="attachFile3" style="width: 46px;">이미지3</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control" type="file" id="attachFile3" name="attachFile3" accept="image/*">
+                      <div id="preview-3" style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-secondary px-3 pt-3 pb-2 rounded-3 mb-4">
+                  <div class="row g-2 align-items-center">
+                    <div class="col-auto">
+                      <label for="title4" class="form-label" style="width: 46px;">제목</label>
+                    </div>
+                    <div class="col">
+                      <input type="hidden" id="id4" name="id4" th:value="${banner4.getId()}">
+                      <input type="hidden" id="fileName4" name="fileName4" th:value="${banner4.getFileName()}">
+                      <input type="text" class="form-control" id="title4" name="title4" th:value="${banner4.getTitle()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label for="content4" class="form-label" style="width: 46px;">내용</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="content4" name="content4" th:value="${banner4.getContent()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label class="form-label" for="attachFile4" style="width: 46px;">이미지4</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control" type="file" id="attachFile4" name="attachFile4" accept="image/*">
+                      <div id="preview-4" style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-secondary px-3 pt-3 pb-2 rounded-3 mb-4">
+                  <div class="row g-2 align-items-center">
+                    <div class="col-auto">
+                      <label for="title5" class="form-label" style="width: 46px;">제목</label>
+                    </div>
+                    <div class="col">
+                      <input type="hidden" id="id5" name="id5" th:value="${banner5.getId()}">
+                      <input type="hidden" id="fileName5" name="fileName5" th:value="${banner5.getFileName()}">
+                      <input type="text" class="form-control" id="title5" name="title5" th:value="${banner5.getTitle()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label for="content5" class="form-label" style="width: 46px;">내용</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="content5" name="content5" th:value="${banner5.getContent()}">
+                    </div>
+                  </div>
+                  <div class="row g-2 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label class="form-label" for="attachFile5" style="width: 46px;">이미지5</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control" type="file" id="attachFile5" name="attachFile5" accept="image/*">
+                      <div id="preview-5" style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="reset" class="btn btn-secondary me-3">취소</button>
+                  <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+          <!-- ===== 본문(홈) 끝 ===== -->
+        </div>
+      </section>
+    </main>
+
+
+    <!-- ===== 푸터(Footer) 시작 ===== -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- ===== 푸터(Footer) 끝 ===== -->
+
+
+    <!-- ===== 맨 위로 가기 버튼 시작 ===== -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+    <!-- ===== 맨 위로 가기 버튼 끝 ===== -->
+
+
+    <!-- Vendor Scripts -->
+    <script src="/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+
+    <!-- Main Theme Script -->
+    <script src="/assets/js/theme.min.js"></script>
+    
+    
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // 이미지 미리보기 및 삭제 기능 (5개 input/preview 쌍)
+        for (let i = 1; i <= 5; i++) {
+          let selectedFile = null;
+          const input = document.getElementById('attachFile' + i);
+          const preview = document.getElementById('preview-' + i);
+          if (input && preview) {
+            input.addEventListener('change', function() {
+              selectedFile = input.files && input.files[0] ? input.files[0] : null;
+              renderPreview();
+            });
+
+            function renderPreview() {
+              preview.innerHTML = '';
+              if (!selectedFile || !selectedFile.type.startsWith('image/')) return;
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                const wrapper = document.createElement('div');
+                wrapper.style.position = 'relative';
+                wrapper.style.display = 'inline-block';
+                wrapper.style.width = '200px';
+                wrapper.style.height = '70px';
+                wrapper.style.overflow = 'hidden';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                img.style.display = 'block';
+                img.style.borderRadius = '5px';
+                img.style.border = '1px solid #dbdbdb';
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = '×';
+                btn.style.position = 'absolute';
+                btn.style.top = '2px';
+                btn.style.right = '2px';
+                btn.style.background = 'rgba(0,0,0,0.5)';
+                btn.style.color = '#fff';
+                btn.style.border = 'none';
+                btn.style.borderRadius = '6px';
+                btn.style.width = '20px';
+                btn.style.height = '20px';
+                btn.style.cursor = 'pointer';
+                btn.style.fontSize = '18px';
+                btn.style.display = 'flex';
+                btn.style.alignItems = 'center';
+                btn.style.justifyContent = 'center';
+                btn.addEventListener('click', function() {
+                  selectedFile = null;
+                  input.value = '';
+                  renderPreview();
+                });
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(btn);
+                preview.appendChild(wrapper);
+              };
+              reader.readAsDataURL(selectedFile);
+            }
+
+            // 폼 제출 시 단일 파일만 업로드
+            const form = input.closest('form');
+            if (form) {
+              form.addEventListener('submit', function(e) {
+                if (selectedFile) {
+                  const dt = new DataTransfer();
+                  dt.items.add(selectedFile);
+                  input.files = dt.files;
+                }
+              });
+            }
+          }
+        }
+      });
+    </script>
+
+  </body>
+</html>
