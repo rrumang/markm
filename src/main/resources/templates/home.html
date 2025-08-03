@@ -49,51 +49,20 @@
             <div class="swiper-wrapper h-100 mt-5">
 
                 <!-- Item -->
-                <div class="swiper-slide hero h-100 py-xl-5 overflow-hidden"  style="background-image: url(/assets/img/landing/hero_01.jpeg); background-size: cover;">
-                    <a href="/items/ucs" target="_blank" rel="noopener" class="bg-transparent border-0 text-decoration-none">
-                        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none opacity-20" style="background: linear-gradient(122deg, #ccd1d727 0%, #ffffff00 100%);"></span>
-                        <div class="container d-flex align-items-center h-100">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h4 class="display-6 mb-lg-4 from-bottom text-shadow-withe">완벽한 마킹 솔루션<br>혁신을 더하다</h4>
-                                    <p class="fs-md text-dark pb-2 mb-lg-5 from-bottom delay-1 text-shadow-withe">열 전사 프린트</p>
+                    <div th:each="banner : ${banners}" class="swiper-slide hero h-100 py-xl-5 overflow-hidden"  th:style="'background-image: url(/images/' + ${banner.fileName} + '); background-size: cover;'">
+                        <a href="/items/ucs" target="_blank" rel="noopener" class="bg-transparent border-0 text-decoration-none">
+                            <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none opacity-20" style="background: linear-gradient(122deg, #ccd1d727 0%, #ffffff00 100%);"></span>
+                            <div class="container d-flex align-items-center h-100">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="display-6 mb-lg-4 from-bottom text-shadow-withe" th:text="${banner.title}"></h4>
+                                        <p class="fs-md text-dark pb-2 mb-lg-5 from-bottom delay-1 text-shadow-withe" th:utext="${banner.content}"></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Item -->
-                <div class="swiper-slide hero h-100 py-xl-5" style="background-image: url(/assets/img/landing/hero_02.jpeg); background-size: cover;">
-                    <a href="/items/edding" target="_blank" rel="noopener" class="bg-transparent border-0 text-decoration-none">
-                        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none opacity-20" style="background: linear-gradient(122deg, #ccd1d727 0%, #ffffff00 100%);"></span>
-                        <div class="container d-flex align-items-center h-100">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h4 class="display-6 mb-lg-4 from-bottom text-shadow-withe">브랜드 가치를 혁신하는<br>마킹 기술</h4>
-                                    <p class="fs-md text-dark pb-2 mb-lg-5 from-bottom delay-1 text-shadow-withe">카트리지 잉크젯</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Item -->
-                <div class="swiper-slide hero h-100 py-xl-5" style="background-image: url(/assets/img/landing/hero_03.jpeg); background-size: cover;">
-                    <a href="/items/macsa" target="_blank" rel="noopener" class="bg-transparent border-0 text-decoration-none">
-                        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none opacity-20" style="background: linear-gradient(122deg, #ccd1d727 0%, #ffffff00 100%);"></span>
-                        <div class="container d-flex align-items-center h-100">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h4 class="display-6 mb-lg-4 from-bottom text-shadow-withe">마크엠의 포장 자동화 <br> 기술</h4>
-                                    <p class="fs-md text-dark pb-2 mb-lg-5 from-bottom delay-1 text-shadow-withe">자동공급피더</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
             </div>
-
             <!-- Prev / next buttons -->
             <button id="hero-prev" type="button" class="btn btn-prev btn-icon btn-sm me-2 d-none d-lg-flex" aria-label="Previous">
                 <i class="bx bx-chevron-left"></i>
@@ -297,12 +266,12 @@
                                             사용 리본: Resin Black, 5mm(폭) x 600m (길이)
                                         </li>
                                     </ul>
-                                    <div class="d-flex justify-content-end mt-3">
-                                        <a href="/items/ucs" class="btn btn-link p-0">
-                                            자세히 보기
-                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
-                                        </a>
-                                    </div>
+<!--                                    <div class="d-flex justify-content-end mt-3">-->
+<!--                                        <a href="/items/ucs" class="btn btn-link p-0">-->
+<!--                                            자세히 보기-->
+<!--                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -336,12 +305,12 @@
                                             사용리본 : Resin Black, 4mm(폭) x 600m (길이)
                                         </li>
                                     </ul>
-                                    <div class="d-flex justify-content-end mt-3">
-                                        <a href="/items/ucs" class="btn btn-link p-0">
-                                            자세히 보기
-                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
-                                        </a>
-                                    </div>
+<!--                                    <div class="d-flex justify-content-end mt-3">-->
+<!--                                        <a href="/items/ucs" class="btn btn-link p-0">-->
+<!--                                            자세히 보기-->
+<!--                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -379,12 +348,12 @@
                                             잉크 : NP Black 42ml, 50만팩 인쇄/카트리지
                                         </li>
                                     </ul>
-                                    <div class="d-flex justify-content-end mt-3">
-                                        <a href="/items/ucs" class="btn btn-link p-0">
-                                            자세히 보기
-                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
-                                        </a>
-                                    </div>
+<!--                                    <div class="d-flex justify-content-end mt-3">-->
+<!--                                        <a href="/items/ucs" class="btn btn-link p-0">-->
+<!--                                            자세히 보기-->
+<!--                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -418,12 +387,12 @@
                                             잉크 : NP Black 42ml
                                         </li>
                                     </ul>
-                                    <div class="d-flex justify-content-end mt-3">
-                                        <a href="/items/edding" class="btn btn-link p-0">
-                                            자세히 보기
-                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>
-                                        </a>
-                                    </div>
+<!--                                    <div class="d-flex justify-content-end mt-3">-->
+<!--                                        <a href="/items/edding" class="btn btn-link p-0">-->
+<!--                                            자세히 보기-->
+<!--                                            <i class="bx bx-right-arrow-alt fs-lg ms-2"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -445,49 +414,22 @@
 
                         <div class=" card-header d-flex justify-content-between align-items-center mb-0 py-3">
                             <h3 class="h4 mb-0">공지사항</h3>
-                            <a href="board-notice.html" class="btn btn-link p-0">
+                            <a href="/board/notice" class="btn btn-link p-0">
                                 더보기
                                 <i class="bx bx-plus fs-lg ms-2"></i>
                             </a>
                         </div>
 
                         <div class="card-body py-3">
-                            <ul class="nav flex-column fs-sm">
+                            <ul th:each="notice, noticeState : ${notices}" class="nav flex-column fs-sm">
                                 <li class="nav-item mb-1">
-                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
-                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">1</span>
-                                        <div class="fs-base">
-                                            마크엠 홈페이지 리뉴얼 오픈 안내
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item mb-1">
-                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
-                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">2</span>
-                                        <div class="fs-base"> 제품군 소개: 포장 자동화 솔루션의 핵심</div>
-                                    </a>
-                                </li>
-                                <li class="nav-item mb-1">
-                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
-                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">3</span>
-                                        <div class="fs-base"> 적용 사례 업데이트: 실전 적용 현장 공개</div>
-                                    </a>
-                                </li>
-                                <li class="nav-item mb-1">
-                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
-                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">4</span>ya
-                                        <div class="fs-base"> 포장 자동화 솔루션 제품 특장점</div>
-                                    </a>
-                                </li>
-                                <li class="nav-item mb-1">
-                                    <a href="board-notice-detail.html" class="nav-link py-1 px-0">
-                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;">5</span>
-                                        <div class="fs-base"> 제품 A/S 및 유지보수 서비스 안내</div>
+                                    <a th:href="@{/board/{id}/view (id=${notice.id})}" class="nav-link py-1 px-0">
+                                        <span class="flex-shrink-0 fw-normal opacity-60 text-nowrap me-1" style="min-width: 40px;" th:text="${noticeState.count}"></span>
+                                        <div class="fs-base" th:text="${notice.title}"></div>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
 
@@ -497,7 +439,7 @@
                             <h3 class="h4 text-light mb-2">고객센터</h3>
                             <div class="py-md-2 py-2 d-flex flex-column align-items-center justify-content-center mt-2">
                                 <h3 class="fs-5 fw-normal text-light opacity-75">
-                                    <span class="opacity-75 me-2">상담시간</span> 9:30 ~ 18:00
+                                    <span class="opacity-75 me-2">상담시간</span> 9:30 ~ 17:30
                                 </h3>
                                 <a href="mailto:email@example.com" class="display-6 text-light text-decoration-none">
                                     <i class="bx bx-phone-call display-6 me-1 fw-light text-light opacity-75"></i>
