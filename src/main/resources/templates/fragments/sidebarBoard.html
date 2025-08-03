@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<aside th:fragment="sidebarBoard" class="col-lg-3 col-md-4 border-md-end pb-3 pb-md-5">
+    <div class="position-sticky top-0" style="top: 105px !important;">
+        <div class="text-left">
+            <div class="mx-auto mb-md-3 pt-md-3 pb-1 rounded-3 position-relative overflow-hidden text-center">
+                <span class="bg-gradient-primary position-absolute top-0 start-0 w-100 h-100 opacity-10 d-none d-md-block"></span>
+                <h2 class="h4 mb-1 mt-3">커뮤니티</h2>
+                <p class="pb-2">Board</p>
+            </div>
+            <button type="button" class="btn btn-secondary w-100 d-md-none mt-n2 mb-3" data-bs-toggle="collapse" data-bs-target="#account-menu">
+                커뮤니티 메뉴
+                <i class="bx bx-chevron-down fs-lg ms-1"></i>
+            </button>
+
+            <div id="account-menu" class="list-group list-group-flush collapse d-md-block">
+                <div class="list-group-item p-0">
+                    <a href="/board/notice" th:classappend="${type == 'notice' ? 'active' : ''}" class="list-group-item-action d-flex align-items-center text-decoration-none px-3 py-2 my-2">
+                        공지사항
+                    </a>
+                </div>
+
+                <div class="list-group-item p-0">
+                    <a href="/board/archive" th:classappend="${type == 'archive' ? 'active' : ''}" class="list-group-item-action d-flex align-items-center text-decoration-none px-3 py-2 my-2">
+                        자료실
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>

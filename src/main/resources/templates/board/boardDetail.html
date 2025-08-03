@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light">
+<!-- Header -->
+<head>
+  <title>MARKM | 커뮤니티</title>
+  <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+  <!-- Body -->
+  <body>
+    <!-- ===== 페이지 로딩 스피너 시작 ===== -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>로딩중...</span>
+      </div>
+    </div>
+    <!-- ===== 페이지 로딩 스피너 끝 ===== -->
+
+
+    <main class="page-wrapper">
+      <!-- ===== 네비게이션바(Navbar) 시작 ===== -->
+      <header th:replace="~{fragments/nav :: nav}"></header>
+      <!-- ===== 네비게이션바(Navbar) 끝 ===== -->
+
+
+      <!-- ===== 히어로 이미지(Hero image) 시작 ===== -->
+      <section class="position-relative bg-dark pt-lg-4" style="background: linear-gradient(90deg, #141e35 0%, #1a2e58 51.04%, #16223f 100%)">
+        <div class="jarallax d-none d-md-block" data-jarallax data-speed="0.35">
+          <div class="jarallax-img" style="background-image: url(/assets/img/landing/saas-5/hero-bg-pattern.png); filter: hue-rotate(334deg);"></div>
+          <div class="d-none d-md-block" style="height: 280px;"></div>
+          <div class="d-flex align-items-center justify-content-center position-absolute top-50 start-50 translate-middle w-100 h-100">
+            <div class="container" style="padding-top: 80px;">
+              <h2 class="h3 mb-md-3 mb-2 slogan-text">완벽한 마킹 솔루션, 노하우에 기술을 더하다</h2>
+              <p class="fs-lg banner-text">주식회사 마크엠</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ===== 히어로 이미지(Hero image) 끝 ===== -->
+
+
+      <!-- ===== 브레드크럼(Breadcrumb) 시작 ===== -->
+      <nav class="container py-4 mb-2 my-lg-3"  aria-label="breadcrumb">
+        <ol class="breadcrumb justify-content-end mb-0">
+          <li class="breadcrumb-item">
+            <a href="/"><i class="bx bx-home-alt fs-lg me-1"></i>Home</a>
+          </li>
+          <li class="breadcrumb-item">커뮤니티</li>
+        </ol>
+      </nav>
+      <!-- ===== 브레드크럼(Breadcrumb) 끝 ===== -->
+
+
+      <!-- Page content -->
+      <section class="container">
+        <div class="row">
+          <!-- ===== 사이드바(Sidebar) 시작 ===== -->
+          <aside th:replace="~{fragments/sidebarBoard :: sidebarBoard}"></aside>
+          <!-- ===== 사이드바(Sidebar) 끝 ===== -->
+          
+          
+          <!-- ===== 공지사항 시작 ===== -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4">
+            <div class="ps-md-3 ps-lg-0 pb-md-4">
+              <h1 class="h3 pb-1">공지사항</h1>
+              <p class="text-muted">마크엠의 다양한 소식을 확인하세요.</p>
+              <div class="table-responsive mb-3 border-top border-primary border-2">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th class="text-center bg-secondary text-muted fw-normal" style="width: 18%" scope="row">제목</th>
+                      <td th:text="${board.title}">제목</td>
+                    </tr>
+                    <tr>
+                      <th class="text-center bg-secondary text-muted fw-normal" scope="row">등록일</th>
+                      <td th:text="${#temporals.format(board.createdAt, 'yyyy.MM.dd')}">등록일</td>
+                    </tr>
+                    <tr>
+                      <th class="text-center bg-secondary text-muted fw-normal" scope="row">조회수</th>
+                      <td>준비중</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <pre class="shadow-none border-0 pt-0 pb-2 px-0 m-0 fs-base white-space-pre-wrap" style="min-height: 240px;" th:utext="${board.content}"></pre>
+
+              <hr class="mt-4 border-2 border-primary">
+
+              <div class="d-flex justify-content-end my-4">
+                <a th:href="@{/board/{type} (type=${board.type})}" class="btn btn-outline-primary py-2 px-3 btn-link">
+                  목록
+                  <i class="bx bx-plus fs-sm ms-1 me-n1 lead"></i>
+                </a>
+              </div>
+
+            </div>
+          </div>
+          <!-- ===== 공지사항 끝 ===== -->
+        </div>
+      </section>      
+    </main>
+
+
+    <!-- ===== 푸터(Footer) 시작 ===== -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- ===== 푸터(Footer) 끝 ===== -->
+
+
+    <!-- ===== 맨 위로 가기 버튼 시작 ===== -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+    <!-- ===== 맨 위로 가기 버튼 끝 ===== -->
+
+    
+    <!-- Main Theme Script -->
+    <script src="/assets/js/theme.min.js"></script>
+  </body>
+</html>

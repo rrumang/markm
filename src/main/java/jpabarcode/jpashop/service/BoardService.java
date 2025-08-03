@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -43,13 +42,55 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    @Transactional
+    public void updateBoard(BoardForm form) throws IOException {
+        Board findBoard = boardRepository.findOne(form.getId());
+        findBoard.setTitle(form.getTitle());
+        findBoard.setContent(form.getContent());
+
+        if (!form.getAttachFile().isEmpty()) {
+            //파일저장
+            MultipartFile attachFile = form.getAttachFile();
+            UploadFile uploadFile = fileStore.storeFile(attachFile);
+            //기존파일 삭제
+            fileStore.deleteFile(findBoard.getFileName());
+            //파일명 추가
+            findBoard.setFileName(uploadFile.getStoreFileName());
+        }
+    }
+
+    @Transactional
+    public String deleteBoard(BoardForm form) throws IOException {
+        Board findBoard = boardRepository.findOne(form.getId());
+        if (findBoard.getFileName() != null && !findBoard.getFileName().isEmpty()) {
+            fileStore.deleteFile(findBoard.getFileName());
+        }
+        boardRepository.deleteOne(form.getId());
+        return findBoard.getType();
+    }
+
     //게시글 전체 조회
     public List<Board> findByType(String type) {
         return boardRepository.findByType(type);
     }
 
+    //게시글 전체 조회
+    public List<Board> findByType2(String type, String title, int startIndex, int pageSize) {
+        return boardRepository.findByType2(type, title, startIndex, pageSize);
+    }
+
+    //게시글 전체 조회
+    public long findByTypeCnt(String type, String title) {
+        return boardRepository.findByTypeCnt(type, title);
+    }
+
     //게시글 상세 조회
-    public Optional<Board> findOne(Long id, String type) {
-        return boardRepository.findOne(id, type);
+    public Board findOne(Long id) {
+        return boardRepository.findOne(id);
+    }
+
+    //게시글 N개 조회
+    public List<Board> findByTypeLimit(String type, int limit) {
+        return boardRepository.findByTypeLimit(type, limit);
     }
 }

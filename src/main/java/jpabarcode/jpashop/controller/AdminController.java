@@ -2,19 +2,27 @@ package jpabarcode.jpashop.controller;
 
 import jpabarcode.jpashop.domain.Board;
 import jpabarcode.jpashop.domain.Member;
+import jpabarcode.jpashop.domain.Pagination;
 import jpabarcode.jpashop.domain.item.Item;
 import jpabarcode.jpashop.file.FileStore;
 import jpabarcode.jpashop.service.BoardService;
 import jpabarcode.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Controller
 @Slf4j
@@ -321,14 +329,96 @@ public class AdminController {
         return "redirect:/admin/items/" + category;
     }
 
-    //게시글 조회
+    //게시판 조회
     @GetMapping("/admin/board/{type}")
-    public String boards(@PathVariable String type, Model model) {
-        List<Board> boards = boardService.findByType(type);
+    public String boards(@SessionAttribute(name = "LOGIN_MEMBER", required = false) Member loginMember, @PathVariable String type, Model model, @RequestParam(value = "title", required = false) String title, @RequestParam(defaultValue = "1") int page) {
+        log.info("board controller");
+        //세션에 회원데이터가 없으면 home
+        if(loginMember == null) {
+            model.addAttribute("member", new Member());
+            return "home";
+        }
+        model.addAttribute("member", loginMember);
+
+        // 검색 조건
+        BoardForm searchForm = new BoardForm();
+        if(title != null && !title.isEmpty()) searchForm.setTitle(title);
+        model.addAttribute("searchForm", searchForm);
+
+        // 페이징 처리
+        // 총 게시물 수
+        long totalListCnt = boardService.findByTypeCnt(type, title);
+        // 생성인자로 총 게시물 수, 현재 페이지를 전달
+        Pagination pagination = new Pagination(totalListCnt, page);
+        // DB select start index
+        int startIndex = pagination.getStartIndex();
+        // 페이지 당 보여지는 게시글의 최대 개수
+        int pageSize = pagination.getPageSize();
+
+        List<Board> boards = boardService.findByType2(type, title, startIndex, pageSize);
         model.addAttribute("boards", boards);
         model.addAttribute("type", type);
+        model.addAttribute("pagination", pagination);
 
-        return "home";
+        return "admin/board/boardList";
+    }
+
+    //게시판 등록 화면 조회
+    @GetMapping("/admin/board/{type}/new")
+    public String createBoardForm(@SessionAttribute(name = "LOGIN_MEMBER", required = false) Member loginMember, Model model,  @PathVariable String type) {
+        //세션에 회원데이터가 없으면 제품소개 페이지로 이동
+        if(loginMember == null) {
+            model.addAttribute("member", new Member());
+            return "home";
+        }
+        model.addAttribute("member", loginMember);
+        model.addAttribute("form", new BoardForm());
+        model.addAttribute("type", type);
+        return "admin/board/createForm";
+    }
+
+    //게시판 등록
+    @PostMapping("/admin/board/new")
+    public String create(BoardForm form) throws IOException {
+        boardService.save(form);
+        System.out.println("type : " + form.getContent());
+        return "redirect:/admin/board/"+ form.getType();
+    }
+
+    //게시판 수정화면 조회
+    @GetMapping("/admin/board/{boardId}/edit")
+    public String updateBoardForm(@SessionAttribute(name = "LOGIN_MEMBER", required = false) Member loginMember, @PathVariable("boardId") Long boardId, Model model) {
+        if(loginMember == null) {
+            model.addAttribute("member", new Member());
+            return "home";
+        }
+        model.addAttribute("member", loginMember);
+
+        Board board = boardService.findOne(boardId);
+
+        BoardForm form = new BoardForm();
+        form.setType(board.getType());
+        form.setId(board.getId());
+        form.setTitle(board.getTitle());
+        form.setContent(board.getContent());
+        form.setFileName(board.getFileName());
+
+        model.addAttribute("form", form);
+        return "admin/board/updateForm";
+    }
+
+    //게시판 수정
+    @PostMapping("/admin/board/{boardId}/edit")
+    public String updateBoard(@ModelAttribute("form") BoardForm form) throws IOException {
+        boardService.updateBoard(form);
+        return "redirect:/admin/board/" + form.getType();
+    }
+
+    //게시판 삭제
+    @PostMapping("/admin/board/{boardId}/delete")
+    public String deleteItem(@ModelAttribute("form") BoardForm form) throws IOException {
+        String type = boardService.deleteBoard(form);
+        return "redirect:/admin/board/" + type;
     }
 
     //문의하기
