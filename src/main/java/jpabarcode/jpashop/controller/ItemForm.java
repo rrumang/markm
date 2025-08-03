@@ -12,12 +12,21 @@ import java.util.List;
 public class ItemForm {
 
     private Long id;
+
     private String name;
+
     private String content;
+
     private int price;
+
     private int stockQuantity;
+
     private MultipartFile attachFile;
+
     private String fileName;
+
     private String category1;
+
     private String category2;
+
 }

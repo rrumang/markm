@@ -65,7 +65,7 @@ public class ItemService {
     @Transactional
     public String deleteItem(ItemForm form) throws IOException {
         Item findItem = itemRepository.findOne(form.getId());
-        if (!findItem.getFileName().isEmpty()) {
+        if (findItem.getFileName() != null && !findItem.getFileName().isEmpty()) {
             fileStore.deleteFile(findItem.getFileName());
         }
         itemRepository.deleteOne(form.getId());

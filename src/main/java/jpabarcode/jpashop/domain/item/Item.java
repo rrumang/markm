@@ -22,11 +22,18 @@ public class Item extends BaseEntity {
     private Long id;
 
     private String name;
+
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
+
     private int price;
+
     private int stockQuantity;
+
     private String fileName;
+
     private String category1;
+
     private String category2;
 
     @ManyToMany(mappedBy = "items")
